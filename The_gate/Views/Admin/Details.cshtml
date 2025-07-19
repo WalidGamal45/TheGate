@@ -1,0 +1,18 @@
+﻿@model Domain.Domains.Admin
+@{
+    ViewData["Title"] = "Details";
+}
+
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>Id</th>
+        <th>username</th>
+        <th>password</th>
+    </tr>
+    <tr>
+        <td>@Model.Id</td>
+        <td>@Model.Username</td>
+        <td>@Model.Password</td>
+    </tr>
+</table>
+<a asp-action="GetallAdmins" class="btn btn-success">Back To List</a>

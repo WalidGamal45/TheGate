@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "HomePage";
+}
+
+<div style="display: flex;">
+    <div class="sidebar" style="width: 60px; background-color: #333; height: 100vh; display: flex; flex-direction: column; align-items: center; padding-top: 10px; gap: 20px;">
+
+        <a asp-controller="Admin" asp-action="GetAllAdmins" style="color: white; text-decoration: none;">
+            <button style="background: none; border: none; color: white; font-size: 30px;">🏠</button>
+        </a>
+
+        <a asp-controller="Category" asp-action="Index" style="color: white; text-decoration: none;">
+            <button style="background: none; border: none; color: white; font-size: 30px;">👁️</button>
+        </a>
+       
+    </div>
+
+    <div id="mainContent" style="flex-grow: 1; padding: 20px;">
+        <h2>Welcome_To_My_Application</h2>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+﻿@model Domain.Domains.Admin
+@{
+	ViewData["Title"] = "Edit";
+}
+<div>
+	<a asp-action="GetallAdmins" class="btn btn-primary">Back To Admins</a>
+
+</div>
+<br />
+
+<div>
+	<form asp-action="Edit" method="post">
+		<div>
+			<label asp-for="Id">Id</label>
+			<input asp-for="Id" class="form form-control" />
+		</div>
+
+		<div>
+			<label asp-for="Username">username</label>
+			<input asp-for="Username" class="form form-control" />
+		</div>
+		<div>
+			<label asp-for="Password">password</label>
+			<input asp-for="Password" class="form form-control" />
+		</div>
+		<br />
+		<div>
+			<input type="submit" value="Edit" class="btn btn-success" />
+		</div>
+	</form>
+</div>
+

@@ -1,0 +1,22 @@
+﻿@model Domain.DTOs.AddAdminDto
+@{
+	ViewData["Title"] = "Add";
+}
+<div>
+	<a asp-action="GetallAdmins" class="btn btn-primary">Back To List</a>
+</div>
+<div>
+	<form asp-action="Add" method="post">
+
+		<div>
+			<label asp-for="Username">username</label>
+			<input asp-for="Username" class="form form-control" />
+		</div>
+		<div>
+			<label asp-for="Password">password</label>
+			<input asp-for="Password" class="form form-control" />
+		</div>
+		<input type="submit" value="Add Admin" class="btn btn-success" />
+	</form>
+</div>
+

@@ -1,0 +1,20 @@
+﻿@model Domain.Domains.Admin
+@{
+    ViewData["Title"] = "Login";
+    Layout = "_MyLayout";
+}
+
+<form asp-action="Login" method="post">
+    <label>Username</label>
+    <input asp-for="@Model.Username" class="form form-control" />
+    
+    <label>Password</label>
+    <input asp-for="@Model.Password" type="password" class="form form-control" />
+    
+    <input type="submit" value="Login" class="btn btn-primary" />
+</form>
+
+@if (ViewBag.Error != null)
+{
+    <div class="text-danger mt-4 accordion-body">@ViewBag.Error</div>
+}
