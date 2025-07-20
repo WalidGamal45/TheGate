@@ -1,10 +1,15 @@
 ﻿using Microsoft.AspNetCore.Http;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Domain.Domains
+namespace Domain.DTOs.SubCategory
 {
-    public class SubCategory
+    public class SubCategoryDto
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "please enter the name")]
@@ -15,14 +20,11 @@ namespace Domain.Domains
         [RegularExpression(@"^[\u0600-\u06FF\s]+$", ErrorMessage = "الاسم العربي يجب أن يكون باللغة العربية ")]
         public string NameA { get; set; }
 
-        [Required]
-        public string? Image { get; set; }
+        
+        public IFormFile? Image { get; set; }
 
         public bool IsActive { get; set; }
       
         public int categoryId { get; set; }
-        public Category? category { get; set; }
-
-
     }
 }

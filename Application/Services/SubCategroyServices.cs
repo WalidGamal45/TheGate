@@ -24,7 +24,7 @@ namespace Application.Services
             _context.Remove(sub);
         }
 
-        public IEnumerable<SubCategory> GetAdmins()
+        public IEnumerable<SubCategory> GetAll()
         {
             var sub = _context.SubCategories.Include(x=>x.category).ToList();
             return sub;

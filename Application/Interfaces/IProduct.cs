@@ -10,7 +10,7 @@ namespace Application.Interfaces
 {
     public interface IProduct
     {
-        IEnumerable<Product> GetAdmins();
+        IEnumerable<Product> GetAll();
         Product GetById(int id);
         void Add(Product admin);
         void Update(Product admin);

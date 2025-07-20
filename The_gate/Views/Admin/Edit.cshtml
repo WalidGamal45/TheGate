@@ -10,18 +10,17 @@
 
 <div>
 	<form asp-action="Edit" method="post">
-		<div>
-			<label asp-for="Id">Id</label>
-			<input asp-for="Id" class="form form-control" />
-		</div>
+		
 
 		<div>
 			<label asp-for="Username">username</label>
 			<input asp-for="Username" class="form form-control" />
+			<span asp-validation-for="Username" class="text-danger"></span>
 		</div>
 		<div>
 			<label asp-for="Password">password</label>
 			<input asp-for="Password" class="form form-control" />
+			<span asp-validation-for="Password" class="text-danger"></span>
 		</div>
 		<br />
 		<div>
@@ -29,4 +28,10 @@
 		</div>
 	</form>
 </div>
+@section Scripts{
+
+	<partial name="_ValidationScriptsPartial" />
+
+
+}
 

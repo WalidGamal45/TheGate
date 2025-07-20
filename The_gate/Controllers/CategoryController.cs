@@ -13,7 +13,7 @@ namespace The_gate.Controllers
         }
         public IActionResult Index()
         {
-            var cat = _category.GetAdmins();
+            var cat = _category.GetAll();
             return PartialView("_IndexToCategoryPartial", cat);
         }
         [HttpGet]
@@ -25,7 +25,7 @@ namespace The_gate.Controllers
 
         }
         [HttpPost]
-        public IActionResult Edit(int id, AddCategryDto category)
+        public IActionResult Edit(int id, EditCategoryDto category)
         {
             if (ModelState.IsValid)
             {

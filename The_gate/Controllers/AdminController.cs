@@ -59,9 +59,13 @@ namespace The_gate.Controllers
         [HttpPost]
         public IActionResult Add(AddAdminDto adminDto)
         {
-            _admin.Add(adminDto);
+            if (ModelState.IsValid)
+            {
+                _admin.Add(adminDto);
 
-            return RedirectToAction("HomePage", "Admin");
+                return RedirectToAction("HomePage", "Admin");
+            }
+            return View(adminDto);
         }
         [HttpGet]
         public ActionResult Edit(int id)
@@ -73,14 +77,19 @@ namespace The_gate.Controllers
         public ActionResult Edit(UpdateAdminDto newadminDto)
 
         {
-            _admin.Update(newadminDto);
+            if(ModelState.IsValid)
+            {
+                _admin.Update(newadminDto);
 
-            return RedirectToAction("HomePage", "Admin");
+                return RedirectToAction("HomePage", "Admin");
+            }
+            return View(newadminDto);
+            
         }
         public ActionResult Delete(int id)
         {
              _admin.Delete(id);
-            return RedirectToAction("GetallAdmins");
+            return RedirectToAction("HomePage", "Admin");
 
         }
 

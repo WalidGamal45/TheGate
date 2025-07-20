@@ -3,7 +3,7 @@
 	ViewData["Title"] = "Add";
 }
 <div>
-	<asp-controller ="Admin" asp-action="HomePage" class="btn btn-primary">Back To Home</asp-controller>
+	<a asp-controller="Admin" asp-action="HomePage" class="btn btn-primary">Back To Home</a>
 </div>
 <div>
 	<form asp-action="Add" method="post">
@@ -11,12 +11,18 @@
 		<div>
 			<label asp-for="Username">username</label>
 			<input asp-for="Username" class="form form-control" />
+			<span asp-validation-for="Username" class="text-danger"></span>
 		</div>
 		<div>
 			<label asp-for="Password">password</label>
 			<input asp-for="Password" class="form form-control" />
+			<span asp-validation-for="Password" class="text-danger"></span>
 		</div>
 		<input type="submit" value="Add Admin" class="btn btn-success" />
 	</form>
 </div>
+@section Scripts{
+
+	<partial name="_ValidationScriptsPartial" />
+}
 

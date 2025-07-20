@@ -26,7 +26,7 @@ namespace Application.Services
             _context.Remove(cat);
         }
 
-        public IEnumerable<Category> GetAdmins()
+        public IEnumerable<Category> GetAll()
         {
            var cat = _context.Categories.ToList();
             return cat;

@@ -5,7 +5,7 @@ namespace Application.Interfaces
 {
     public interface ICategory
     {
-        IEnumerable<Category> GetAdmins();
+        IEnumerable<Category> GetAll();
         Category GetById(int id);
         void Add(Category admin);
         void Update(Category admin);

@@ -1,9 +1,12 @@
-﻿@model Category
+﻿@using Domain.DTOs.SubCategory
+@using Domain.Domains
+@model SubCategory
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit_SubCategory";
+    SelectList selects = new SelectList(ViewBag.sub, "Id", "NameA");
 }
-<form asp-action="Edit" method="post" enctype="multipart/form-data">
- 
+
+<form asp-action="Edit_SubCategory" method="post" enctype="multipart/form-data">
     <div>
         <label asp-for="NameE"></label>
         <input asp-for="NameE" class="form-control" />
@@ -18,20 +21,26 @@
     </div>
     <div>
         <label asp-for="Image"></label>
-        <input asp-for="Image"  class="form-control" type="file" />
-        <span asp-validation-for="Image" class="text-danger"></span>
-      
+        <input type="file" asp-for="Image" class="form-control" />
+
     </div>
     <div class="form-check">
         <input asp-for="IsActive" class="form-check-input" type="checkbox" />
         <label asp-for="IsActive" class="form-check-label"></label>
         <span asp-validation-for="IsActive" class="text-danger"></span>
     </div>
+    <div>
+        <label asp-for="categoryId"></label>
+        <select asp-for="categoryId" class="form-control" asp-items="selects">
+            <option value="0">__select_category__</option>
+        </select>
+        <span asp-validation-for="categoryId" class="text-danger"></span>
+    </div>
 
     <input type="submit" value="Edit" class="btn btn-primary" />
 
 </form>
-<a asp-controller="Admin" asp-action="HomePage" class="btn btn-success">Back_To_Home</a>
+<a asp-action="HomePage" asp-controller="Admin" class="btn btn-success">Back</a>
 @section Scripts {
 
     <partial name="_ValidationScriptsPartial" />

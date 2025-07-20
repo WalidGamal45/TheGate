@@ -23,7 +23,7 @@ namespace Application.Services
             _dbContext.Remove(pro);
         }
 
-        public IEnumerable<Product> GetAdmins()
+        public IEnumerable<Product> GetAll()
         {
            var pro = _dbContext.Products.ToList();
             return pro;
