@@ -61,7 +61,7 @@ namespace The_gate.Controllers
         {
             _admin.Add(adminDto);
 
-            return RedirectToAction("GetallAdmins");
+            return RedirectToAction("HomePage", "Admin");
         }
         [HttpGet]
         public ActionResult Edit(int id)
@@ -75,7 +75,7 @@ namespace The_gate.Controllers
         {
             _admin.Update(newadminDto);
 
-            return RedirectToAction("GetallAdmins");
+            return RedirectToAction("HomePage", "Admin");
         }
         public ActionResult Delete(int id)
         {

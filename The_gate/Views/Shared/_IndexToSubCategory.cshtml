@@ -1,0 +1,24 @@
+﻿@model List<Domain.Domains.SubCategory>
+<table class="table table-bordered table-hover">
+	<tr>
+		<th>Name_En</th>
+		<th>Name_Ar</th>
+		<th>Image</th>
+		<th>IsActive</th>
+		<th>categoryId</th>
+		
+	</tr>
+	@foreach (var item in Model)
+	{
+		<tr>
+			<td>@item.NameE</td>
+			<td>@item.NameA</td>
+			<td><img src="@item.Image" alt="no image" style="width:100px" /></td>
+			<td>@item.IsActive</td>
+			<td>@item.category?.NameE</td>
+
+		</tr>
+	}
+</table>
+
+

@@ -68,7 +68,7 @@ namespace The_gate.Controllers
                 _category.Update(existingCategory); // تحديث الكائن
                 _category.Save(); // حفظ التغييرات
 
-                return RedirectToAction("Index");
+                return RedirectToAction("HomePage","Admin");
             }
 
             return View(category);
@@ -106,7 +106,7 @@ namespace The_gate.Controllers
                 NameE=category.NameE};
                 _category.Add(cat);
                 _category.Save();
-                return RedirectToAction("Index");
+                return RedirectToAction("HomePage", "Admin");
             }
             return View(category);
         }
@@ -114,7 +114,7 @@ namespace The_gate.Controllers
         {
             _category.Delete(id);
             _category.Save();
-            return RedirectToAction("Index");
+            return RedirectToAction("HomePage", "Admin");
         }
 
     }

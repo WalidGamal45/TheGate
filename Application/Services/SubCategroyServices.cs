@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces;
 using Domain.Domains;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 namespace Application.Services
@@ -25,7 +26,7 @@ namespace Application.Services
 
         public IEnumerable<SubCategory> GetAdmins()
         {
-            var sub = _context.SubCategories.ToList();
+            var sub = _context.SubCategories.Include(x=>x.category).ToList();
             return sub;
         }
 
