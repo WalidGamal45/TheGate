@@ -1,21 +1,72 @@
 ﻿@{
-    ViewData["Title"] = "HomePage";
+	ViewData["Title"] = "HomePage";
 }
 
-<div style="display: flex;">
-    <div class="sidebar" style="width: 60px; background-color: #333; height: 100vh; display: flex; flex-direction: column; align-items: center; padding-top: 10px; gap: 20px;">
+<div style="display: flex;" >
+	<div class="sidebar" style=
+		"width: 150px; background-color: #333; height: 100vh;
+			display: flex; flex-direction: column; align-items: center;
+				padding-top: 10px; gap: 20px;">
 
-        <a asp-controller="Admin" asp-action="GetAllAdmins" style="color: white; text-decoration: none;">
-            <button style="background: none; border: none; color: white; font-size: 30px;">🏠</button>
-        </a>
+		<a onclick="GetIndex1()" style="color: white; text-decoration: none;">
+			<button style="background: none; border: none; color: white; font-size: 30px;">Admins<br/>🏠</button>
+		</a>
 
-        <a asp-controller="Category" asp-action="Index" style="color: white; text-decoration: none;">
-            <button style="background: none; border: none; color: white; font-size: 30px;">👁️</button>
-        </a>
-       
-    </div>
+		<a  onclick="GetIndex2()" style="color: white; text-decoration: none;">
+			<button style="background: none; border: none; color: white; font-size: 30px;">Categories👁️</button>
+		</a>
 
-    <div id="mainContent" style="flex-grow: 1; padding: 20px;">
-        <h2>Welcome_To_My_Application</h2>
-    </div>
+	</div>
+
+	<div id="mainContent" style="flex-grow: 1; padding: 20px;">
+		<h2>Welcome_To_My_Application</h2>
+		<div id="div1"
+			 style=" border: 3px solid #e74c3c;
+				  border-radius: 10px;
+					 padding: 15px;
+				 background-color: #fff5f5;
+					 box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+		</div>
+
+		<div id="div2" 
+			style=" border: 3px solid #e74c3c;
+				  border-radius: 10px;
+					 padding: 15px;
+				 background-color: #fff5f5;
+					 box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+		</div>
+		
+	</div>
 </div>
+@section Scripts {
+	<script>
+		function GetIndex1()
+		{
+
+		  $.ajax(
+			{url: "/Admin/GetallAdmins", success: function(result)
+			{
+				console.log(result)
+				$("#div1").html(result);
+			}
+		 });
+
+		}
+		function GetIndex2()
+		{
+
+		  $.ajax(
+			{url: "/Category/Index", success: function(result)
+			{
+				console.log(result)
+				$("#div2").html(result);
+			}
+		 });
+
+		}
+
+
+	</script>
+
+
+}

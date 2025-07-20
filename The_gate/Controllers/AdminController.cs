@@ -40,7 +40,7 @@ namespace The_gate.Controllers
         public IActionResult GetallAdmins()
         {
             var admin = _admin.GetAdmins();
-            return View("GetallAdmins", admin);
+            return PartialView("_IndexToAdmins", admin);
         }
         public IActionResult Details(int id)
         {

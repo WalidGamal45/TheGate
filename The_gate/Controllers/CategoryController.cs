@@ -14,7 +14,7 @@ namespace The_gate.Controllers
         public IActionResult Index()
         {
             var cat = _category.GetAdmins();
-            return View(cat);
+            return PartialView("_IndexToCategoryPartial", cat);
         }
         [HttpGet]
         public IActionResult Edit(int id)

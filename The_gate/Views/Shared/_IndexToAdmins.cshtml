@@ -1,19 +1,18 @@
 ﻿@model List<Domain.Domains.Admin>
 @{
     ViewData["Title"] = "GetallAdmins";
-    Layout = "_MyLayout";
 }
 <a asp-action="Add" class="btn btn-success">Add New Admin</a>
 <table class="table table-bordered table-hover">
     <tr>
-        <th >Admins</th>
-        <th >Details</th>
-        <th >Edit</th>
-        <th >Delete</th>
+        <th>Admins</th>
+        <th>Details</th>
+        <th>Edit</th>
+        <th>Delete</th>
 
 
     </tr>
-    @foreach(var x in Model)
+    @foreach (var x in Model)
     {
         <tr>
             <td>@x.Username</td>
@@ -22,8 +21,8 @@
             <td><a asp-action="Delete" asp-route-id="@x.Id" class="btn btn-danger">Delete</a></td>
         </tr>
     }
-   
-        
-   
+
+
+
 </table>
-<a  asp-action="HomePage" class="btn btn-primary">Back</a> 
+<a asp-action="HomePage" class="btn btn-primary">Back</a>
