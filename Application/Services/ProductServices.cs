@@ -25,7 +25,7 @@ namespace Application.Services
 
         public IEnumerable<Product> GetAll()
         {
-           var pro = _dbContext.Products.ToList();
+           var pro = _dbContext.Products.Include(x=>x.category).Include(x => x.SubCategory).ToList();
             return pro;
         }
 

@@ -15,6 +15,7 @@ namespace Application.Interfaces
         void Add(Product admin);
         void Update(Product admin);
         void Delete(int id);
+        void Save();
 
     }
 }

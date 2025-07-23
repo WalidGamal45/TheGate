@@ -1,4 +1,6 @@
-﻿@model Category
+﻿@using Domain.DTOs.Category
+@model EditCategoryDto
+
 @{
     ViewData["Title"] = "Edit";
 }
@@ -17,9 +19,9 @@
 
     </div>
     <div>
-        <label asp-for="Image"></label>
-        <input asp-for="Image"  class="form-control" type="file" />
-        <span asp-validation-for="Image" class="text-danger"></span>
+        <label asp-for="Imagefile"></label>
+        <input asp-for="Imagefile"  class="form-control" type="file" />
+        <span asp-validation-for="Imagefile" class="text-danger"></span>
       
     </div>
     <div class="form-check">

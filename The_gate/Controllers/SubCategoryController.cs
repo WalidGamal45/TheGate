@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces;
 using Domain.Domains;
+using Domain.DTOs.Category;
 using Domain.DTOs.SubCategory;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,18 +35,18 @@ namespace The_gate.Controllers
                 if (ModelState.IsValid)
                 {
                     string imagePath = "";
-                    if (category.Image != null && category.Image.Length > 0)
+                    if (category.Imagefile != null && category.Imagefile.Length > 0)
                     {
                         // تحديد المسار الذي ستحفظ فيه الصورة
                         var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
                         // إنشاء اسم فريد للصورة لتفادي التكرار
-                        var uniqueFileName = Guid.NewGuid().ToString() + "_" + category.Image.FileName;
+                        var uniqueFileName = Guid.NewGuid().ToString() + "_" + category.Imagefile.FileName;
                         var filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
                         // حفظ الصورة فعلياً
                         using (var stream = new FileStream(filePath, FileMode.Create))
                         {
-                            category.Image.CopyTo(stream);
+                            category.Imagefile.CopyTo(stream);
                         }
 
                         // حفظ المسار النسبي للصورة لقاعدة البيانات
@@ -76,8 +77,16 @@ namespace The_gate.Controllers
         public IActionResult Edit_SubCategory(int id)
         {
             ViewBag.sub = Category.GetAll();
-            var sub = subCategory.GetById(id);
-            return View(sub);
+            var cat = subCategory.GetById(id);
+            var dto = new SubCategoryDto
+            {
+                NameA = cat.NameA,
+                NameE = cat.NameE,
+                IsActive = cat.IsActive,
+                categoryId= cat.categoryId,
+            };
+            return View(dto);
+
         }
         [HttpPost]
         public IActionResult Edit_SubCategory(SubCategoryDto category, int id)
@@ -91,15 +100,15 @@ namespace The_gate.Controllers
                 }
 
                 // إذا تم رفع صورة جديدة
-                if (category.Image != null && category.Image.Length > 0)
+                if (category.Imagefile != null && category.Imagefile.Length > 0)
                 {
                     var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
-                    var uniqueFileName = Guid.NewGuid().ToString() + "_" + category.Image.FileName;
+                    var uniqueFileName = Guid.NewGuid().ToString() + "_" + category.Imagefile.FileName;
                     var filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
-                        category.Image.CopyTo(stream);
+                        category.Imagefile.CopyTo(stream);
                     }
 
                     // حذف الصورة القديمة إن وجدت (اختياري)

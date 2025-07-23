@@ -5,23 +5,21 @@
 namespace Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class new5 : Migration
+    public partial class init2000 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            
+
             migrationBuilder.AddColumn<string>(
-                name: "Image",
-                table: "SubCategories",
+                name: "Imagep",
+                table: "Products",
                 type: "nvarchar(max)",
                 nullable: false,
                 defaultValue: "");
 
-            migrationBuilder.AddColumn<string>(
-                name: "Image",
-                table: "Categories",
-                type: "nvarchar(max)",
-                nullable: true);
+          
 
             migrationBuilder.AlterColumn<string>(
                 name: "Username",
@@ -45,13 +43,12 @@ namespace Persistence.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Image",
-                table: "SubCategories");
+           
 
             migrationBuilder.DropColumn(
-                name: "Image",
-                table: "Categories");
+                name: "Imagep",
+                table: "Products");
+
 
             migrationBuilder.AlterColumn<string>(
                 name: "Username",

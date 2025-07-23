@@ -1,0 +1,56 @@
+﻿@using Domain.DTOs.Product
+@using Domain.Domains
+@model ProductDto
+@{
+    ViewData["Title"] = "Edit";
+    SelectList selects1 = new SelectList(ViewBag.cat, "Id", "NameA");
+    SelectList selects2 = new SelectList(ViewBag.sub, "Id", "NameA");
+}
+
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+    <div>
+        <label asp-for="NameE"></label>
+        <input asp-for="NameE" class="form-control" />
+        <span asp-validation-for="NameE" class="text-danger"></span>
+
+    </div>
+    <div>
+        <label asp-for="NameA"></label>
+        <input asp-for="NameA" class="form-control" />
+        <span asp-validation-for="NameA" class="text-danger"></span>
+
+    </div>
+    <div>
+        <label asp-for="Imagefile"></label>
+        <input type="file" asp-for="Imagefile" class="form-control" />
+
+    </div>
+    <div >
+        <label asp-for="Price"></label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="categoryId"></label>
+        <select asp-for="categoryId" class="form-control" asp-items="selects1">
+            <option value="0">__select_category__</option>
+        </select>
+        <span asp-validation-for="categoryId" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="SubCategoryId"></label>
+        <select asp-for="SubCategoryId" class="form-control" asp-items="selects2">
+            <option value="0">__select_category__</option>
+        </select>
+        <span asp-validation-for="categoryId" class="text-danger"></span>
+    </div>
+
+    <input type="submit" value="Edit" class="btn btn-primary" />
+
+</form>
+<a asp-action="HomePage" asp-controller="Admin" class="btn btn-success">Back To Home</a>
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+}
+

@@ -18,7 +18,7 @@ namespace Domain.DTOs.Category
 
         public string NameA { get; set; }
 
-        public IFormFile Image { get; set; }
+        public IFormFile Imagefile { get; set; }
 
         public bool IsActive { get; set; }
     }
