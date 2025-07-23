@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces;
 using Domain.Domains;
 using Domain.DTOs;
+using Domain.DTOs.Admins;
 using Microsoft.AspNetCore.Mvc;
 
 namespace The_gate.Controllers
@@ -19,6 +20,7 @@ namespace The_gate.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Login(Admin admin2)
         {
             var admin = _admin.GetAdmins()

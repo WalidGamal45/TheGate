@@ -103,13 +103,13 @@ namespace The_gate.Controllers
         {
             if (ModelState.IsValid)
             {
-                var existingCategory = product.GetById(id); // جلب الكاتيجوري من قاعدة البيانات
+                var existingCategory = product.GetById(id); 
                 if (existingCategory == null)
                 {
                     return NotFound();
                 }
 
-                // إذا تم رفع صورة جديدة
+                
                 if (dto.Imagefile != null && dto.Imagefile.Length > 0)
                 {
                     var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
@@ -121,7 +121,7 @@ namespace The_gate.Controllers
                         dto.Imagefile.CopyTo(stream);
                     }
 
-                    // حذف الصورة القديمة إن وجدت (اختياري)
+                    
                     if (!string.IsNullOrEmpty(existingCategory.Imagep))
                     {
                         var oldImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", existingCategory.Imagep.TrimStart('/'));
@@ -134,7 +134,7 @@ namespace The_gate.Controllers
                     existingCategory.Imagep = "/images/" + uniqueFileName;
                 }
 
-                // تحديث البيانات الأخرى
+               
                 existingCategory.NameA = dto.NameA;
                 existingCategory.NameE = dto.NameE;
                 existingCategory.Price = dto.Price;
@@ -142,8 +142,8 @@ namespace The_gate.Controllers
                 existingCategory.SubCategoryId = dto.SubCategoryId;
 
 
-                product.Update(existingCategory); // تحديث الكائن
-                product.Save(); // حفظ التغييرات
+                product.Update(existingCategory); 
+                product.Save(); 
 
                 return RedirectToAction("HomePage", "Admin");
             }

@@ -36,13 +36,13 @@ namespace The_gate.Controllers
         {
             if (ModelState.IsValid)
             {
-                var existingCategory = _category.GetById(id); // جلب الكاتيجوري من قاعدة البيانات
+                var existingCategory = _category.GetById(id); 
                 if (existingCategory == null)
                 {
                     return NotFound();
                 }
 
-                // إذا تم رفع صورة جديدة
+                
                 if (category.Imagefile != null && category.Imagefile.Length > 0)
                 {
                     var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
@@ -54,7 +54,7 @@ namespace The_gate.Controllers
                         category.Imagefile.CopyTo(stream);
                     }
 
-                    // حذف الصورة القديمة إن وجدت (اختياري)
+                    
                     if (!string.IsNullOrEmpty(existingCategory.Image))
                     {
                         var oldImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", existingCategory.Image.TrimStart('/'));
@@ -67,13 +67,12 @@ namespace The_gate.Controllers
                     existingCategory.Image = "/images/" + uniqueFileName;
                 }
 
-                // تحديث البيانات الأخرى
                 existingCategory.NameA = category.NameA;
                 existingCategory.NameE = category.NameE;
                 existingCategory.IsActive = category.IsActive;
 
-                _category.Update(existingCategory); // تحديث الكائن
-                _category.Save(); // حفظ التغييرات
+                _category.Update(existingCategory); 
+                _category.Save(); 
 
                 return RedirectToAction("HomePage","Admin");
             }
@@ -93,19 +92,19 @@ namespace The_gate.Controllers
                 string imagePath = "";
                 if (category.Imagefile != null && category.Imagefile.Length > 0)
                 {
-                    // تحديد المسار الذي ستحفظ فيه الصورة
+                   
                     var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
-                    // إنشاء اسم فريد للصورة لتفادي التكرار
+                    
                     var uniqueFileName = Guid.NewGuid().ToString() + "_" + category.Imagefile.FileName;
                     var filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
-                    // حفظ الصورة فعلياً
+                    
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
                         category.Imagefile.CopyTo(stream);
                     }
 
-                    // حفظ المسار النسبي للصورة لقاعدة البيانات
+                    
                     imagePath = "/images/" + uniqueFileName;
                 }
                 var cat=new Category { Image= imagePath,
