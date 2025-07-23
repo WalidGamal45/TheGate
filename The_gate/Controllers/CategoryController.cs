@@ -7,8 +7,6 @@ namespace The_gate.Controllers
     public class CategoryController : Controller
     {
         private readonly ICategory _category;
-        private object _mapper;
-
         public CategoryController(ICategory category)
         {
             _category = category;
