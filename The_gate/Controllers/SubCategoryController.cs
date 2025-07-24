@@ -13,18 +13,18 @@ namespace The_gate.Controllers
         public SubCategoryController(ISubCategory sub, ICategory category)
         {
             subCategory = sub;
-            Category=category;
+            Category = category;
         }
         public IActionResult Index()
         {
-            var sub=subCategory.GetAll();
-            return PartialView("_IndexToSubCategory",sub);
+            var sub = subCategory.GetAll();
+            return PartialView("_IndexToSubCategory", sub);
         }
         [HttpGet]
         public IActionResult Add_SubCategory()
         {
-           
-            ViewBag.sub=Category.GetAll();
+
+            ViewBag.sub = Category.GetAll();
             return View();
         }
         [HttpPost]
@@ -83,7 +83,7 @@ namespace The_gate.Controllers
                 NameA = cat.NameA,
                 NameE = cat.NameE,
                 IsActive = cat.IsActive,
-                categoryId= cat.categoryId,
+                categoryId = cat.categoryId,
             };
             return View(dto);
 
@@ -129,7 +129,7 @@ namespace The_gate.Controllers
                 existingCategory.NameE = category.NameE;
                 existingCategory.IsActive = category.IsActive;
                 existingCategory.categoryId = category.categoryId;
-                
+
 
                 subCategory.Update(existingCategory); // تحديث الكائن
                 subCategory.Save(); // حفظ التغييرات

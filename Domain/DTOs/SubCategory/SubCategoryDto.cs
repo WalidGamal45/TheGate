@@ -24,7 +24,7 @@ namespace Domain.DTOs.SubCategory
         public IFormFile? Imagefile { get; set; }
 
         public bool IsActive { get; set; }
-      
+        [Required]
         public int categoryId { get; set; }
     }
 }

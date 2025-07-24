@@ -31,8 +31,8 @@
     </div>
     <div>
         <label asp-for="categoryId"></label>
-        <select asp-for="categoryId" class="form-control" asp-items="selects">
-            <option value="0">__select_category__</option>
+        <select asp-for="categoryId" class="form-control" asp-items="selects" required>
+            <option >__select_category__</option>
         </select>
         <span asp-validation-for="categoryId" class="text-danger"></span>
     </div>
