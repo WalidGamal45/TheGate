@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces;
+using Domain.Domains;
 using Domain.DTOs.Category;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,35 +25,36 @@ namespace The_gate.Controllers
             {
                 NameA = cat.NameA,
                 NameE = cat.NameE,
-                IsActive = cat.IsActive,   
+                IsActive = cat.IsActive,
+               
             };
             return View(dto);
 
         }
         [HttpPost]
-        public IActionResult Edit(int id, EditCategoryDto category)
+        public IActionResult Edit(int id, EditCategoryDto categoryDto)
         {
             if (ModelState.IsValid)
             {
-                var existingCategory = _category.GetById(id); 
+                var existingCategory = _category.GetById(id); // جلب الكاتيجوري من قاعدة البيانات
                 if (existingCategory == null)
                 {
                     return NotFound();
                 }
 
-                
-                if (category.Imagefile != null && category.Imagefile.Length > 0)
+                // إذا تم رفع صورة جديدة
+                if (categoryDto.Imagefile != null && categoryDto.Imagefile.Length > 0)
                 {
                     var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
-                    var uniqueFileName = Guid.NewGuid().ToString() + "_" + category.Imagefile.FileName;
+                    var uniqueFileName = Guid.NewGuid().ToString() + "_" + categoryDto.Imagefile.FileName;
                     var filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
-                        category.Imagefile.CopyTo(stream);
+                        categoryDto.Imagefile.CopyTo(stream);
                     }
 
-                    
+                    // حذف الصورة القديمة إن وجدت (اختياري)
                     if (!string.IsNullOrEmpty(existingCategory.Image))
                     {
                         var oldImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", existingCategory.Image.TrimStart('/'));
@@ -65,18 +67,24 @@ namespace The_gate.Controllers
                     existingCategory.Image = "/images/" + uniqueFileName;
                 }
 
-                existingCategory.NameA = category.NameA;
-                existingCategory.NameE = category.NameE;
-                existingCategory.IsActive = category.IsActive;
+                // تحديث البيانات الأخرى
+                existingCategory.NameA = categoryDto.NameA;
+                existingCategory.NameE = categoryDto.NameE;
+                existingCategory.IsActive = categoryDto.IsActive;
+              
 
-                _category.Update(existingCategory); 
-                _category.Save(); 
 
-                return RedirectToAction("HomePage","Admin");
+                _category.Update(existingCategory); // تحديث الكائن
+                _category.Save(); // حفظ التغييرات
+
+                return RedirectToAction("HomePage", "Admin");
             }
+            ViewBag.sub = _category.GetAll();
 
-            return View(category);
+            return View(categoryDto);
+
         }
+      
 
         public IActionResult Add()
         {
