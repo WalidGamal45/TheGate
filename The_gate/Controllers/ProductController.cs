@@ -4,6 +4,7 @@ using Domain.Domains;
 using Domain.DTOs.Product;
 using Domain.DTOs.SubCategory;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace The_gate.Controllers
 {
@@ -20,6 +21,18 @@ namespace The_gate.Controllers
             subCategory = _subCategory;
             image = _image;
         }
+        [HttpGet]
+        public JsonResult GetSubByCat(int categoryId)
+        {
+            var subs = subCategory.GetAll()
+                .Where(s => s.categoryId == categoryId)
+                .Select(s => new { id = s.Id, nameA = s.NameA })
+                .ToList();
+
+            return Json(subs);
+        }
+
+
 
         public IActionResult GetAllProduct()
         {
@@ -40,6 +53,7 @@ namespace The_gate.Controllers
             if (ModelState.IsValid)
             {
 
+
                 string imagePath = image.SaveImage(_product.Imagefile, "images");
 
                 var cat = new Product
@@ -54,13 +68,15 @@ namespace The_gate.Controllers
 
                 product.Add(cat);
                 product.Save();
+                ViewBag.cat = category.GetAll();
+                ViewBag.sub = subCategory.GetAll();
 
                 return RedirectToAction("HomePage", "Admin");
 
             }
 
             ViewBag.sub = category.GetAll();
-            return View(product);
+            return View(_product);
         }
         [HttpGet]
         public IActionResult Edit(int id)
