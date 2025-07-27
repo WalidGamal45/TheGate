@@ -1,5 +1,6 @@
 ﻿using Domain.Domains;
 using Domain.DTOs;
+using Domain.DTOs.Product;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,8 @@ namespace Application.Interfaces
     {
         IEnumerable<Product> GetAll();
         Product GetById(int id);
-        void Add(Product admin);
-        void Update(Product admin);
+        void Add(Product product);
+        void Update(Product product);
         void Delete(int id);
         void Save();
 

@@ -1,5 +1,6 @@
 ﻿using Domain.Domains;
 using Domain.DTOs;
+using Domain.DTOs.Category;
 
 namespace Application.Interfaces
 {

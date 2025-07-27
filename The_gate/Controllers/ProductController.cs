@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces;
+using Application.Services;
 using Domain.Domains;
 using Domain.DTOs.Product;
 using Domain.DTOs.SubCategory;
@@ -11,11 +12,13 @@ namespace The_gate.Controllers
         private readonly IProduct product;
         private readonly ICategory category;
         private readonly ISubCategory subCategory;
-        public ProductController(IProduct _product, ICategory _category, ISubCategory _subCategory)
+        private readonly IImageService image;
+        public ProductController(IProduct _product, ICategory _category, ISubCategory _subCategory, IImageService _image)
         {
             product = _product;
             category = _category;
             subCategory = _subCategory;
+            image = _image;
         }
 
         public IActionResult GetAllProduct()
@@ -31,59 +34,36 @@ namespace The_gate.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult AddProduct(ProductDto dto)
+        public IActionResult AddProduct(ProductDto _product)
         {
+
             if (ModelState.IsValid)
             {
-                try
+
+                string imagePath = image.SaveImage(_product.Imagefile, "images");
+
+                var cat = new Product
                 {
-                    if (ModelState.IsValid)
-                    {
-                        string imagePath = "";
-                        if (dto.Imagefile != null && dto.Imagefile.Length > 0)
-                        {
-                            // تحديد المسار الذي ستحفظ فيه الصورة
-                            var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
-                            // إنشاء اسم فريد للصورة لتفادي التكرار
-                            var uniqueFileName = Guid.NewGuid().ToString() + "_" + dto.Imagefile.FileName;
-                            var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    Imagep = imagePath,
+                    Price = _product.Price,
+                    NameA = _product.NameA,
+                    NameE = _product.NameE,
+                    categoryId = _product.categoryId,
+                    SubCategoryId = _product.SubCategoryId
+                };
 
-                            // حفظ الصورة فعلياً
-                            using (var stream = new FileStream(filePath, FileMode.Create))
-                            {
-                                dto.Imagefile.CopyTo(stream);
-                            }
+                product.Add(cat);
+                product.Save();
 
-                            // حفظ المسار النسبي للصورة لقاعدة البيانات
-                            imagePath = "/images/" + uniqueFileName;
-                        }
-                        var cat = new Product
-                        {
-                            Imagep = imagePath,
-                            Price = dto.Price,
-                            NameA = dto.NameA,
-                            NameE = dto.NameE,
-                            categoryId = dto.categoryId,
-                            SubCategoryId = dto.SubCategoryId,
+                return RedirectToAction("HomePage", "Admin");
 
-                        };
-                        product.Add(cat);
-                        product.Save();
-                        return RedirectToAction("HomePage", "Admin");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError("categoryId", "error in categoryid");
-                    ModelState.AddModelError("SubCategoryId", "error in SubCategoryId");
-                }
             }
-            ViewBag.cat = category.GetAll();
-            ViewBag.sub = subCategory.GetAll();
-            return View(dto);
+
+            ViewBag.sub = category.GetAll();
+            return View(product);
         }
         [HttpGet]
-        public IActionResult Edit (int id)
+        public IActionResult Edit(int id)
         {
             ViewBag.cat = category.GetAll();
             ViewBag.sub = subCategory.GetAll();
@@ -99,29 +79,20 @@ namespace The_gate.Controllers
             return View(dto);
         }
         [HttpPost]
-        public IActionResult Edit(ProductDto dto,int id)
+        public IActionResult Edit(ProductDto dto, int id)
         {
             if (ModelState.IsValid)
             {
-                var existingCategory = product.GetById(id); 
+                var existingCategory = product.GetById(id);
                 if (existingCategory == null)
                 {
                     return NotFound();
                 }
 
-                
+                // إذا تم رفع صورة جديدة
                 if (dto.Imagefile != null && dto.Imagefile.Length > 0)
                 {
-                    var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
-                    var uniqueFileName = Guid.NewGuid().ToString() + "_" + dto.Imagefile.FileName;
-                    var filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        dto.Imagefile.CopyTo(stream);
-                    }
-
-                    
+                    // حذف الصورة القديمة إن وجدت
                     if (!string.IsNullOrEmpty(existingCategory.Imagep))
                     {
                         var oldImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", existingCategory.Imagep.TrimStart('/'));
@@ -131,32 +102,34 @@ namespace The_gate.Controllers
                         }
                     }
 
-                    existingCategory.Imagep = "/images/" + uniqueFileName;
+                    // حفظ الصورة الجديدة باستخدام الخدمة
+                    string imagePath = image.SaveImage(dto.Imagefile, "images");
+                    existingCategory.Imagep = imagePath;
                 }
 
-               
+                // تحديث باقي البيانات
                 existingCategory.NameA = dto.NameA;
                 existingCategory.NameE = dto.NameE;
                 existingCategory.Price = dto.Price;
                 existingCategory.categoryId = dto.categoryId;
                 existingCategory.SubCategoryId = dto.SubCategoryId;
 
-
-                product.Update(existingCategory); 
-                product.Save(); 
+                product.Update(existingCategory);
+                product.Save();
 
                 return RedirectToAction("HomePage", "Admin");
             }
+
             ViewBag.cat = category.GetAll();
             ViewBag.sub = subCategory.GetAll();
-
             return View(dto);
+
         }
         public IActionResult Delete(int id)
         {
             product.Delete(id);
             product.Save();
-            return RedirectToAction("HomePage","Admin");
+            return RedirectToAction("HomePage", "Admin");
         }
     }
 }

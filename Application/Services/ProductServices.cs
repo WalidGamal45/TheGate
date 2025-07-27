@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces;
 using Domain.Domains;
+using Domain.DTOs.Product;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -12,9 +13,9 @@ namespace Application.Services
         {
             _dbContext = context;
         }
-        public void Add(Product admin)
+        public void Add(Product pro)
         {
-           _dbContext.Products.Add(admin);
+           _dbContext.Products.Add(pro);
         }
 
         public void Delete(int id)

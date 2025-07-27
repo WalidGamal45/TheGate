@@ -22,7 +22,7 @@ namespace Application.Services
                 Username = adminDto.Username,
                 Password = adminDto.Password,
             };
-
+            
             dBContext.admins.Add(admin);
             dBContext.SaveChanges(); 
 

@@ -16,7 +16,7 @@ namespace Application.Services
             _context = category;
         }
         public void Add(Category admin)
-        {
+        { 
            _context.Add(admin);
         }
 

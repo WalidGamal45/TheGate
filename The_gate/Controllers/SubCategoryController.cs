@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces;
+using Application.Services;
 using Domain.Domains;
 using Domain.DTOs.Category;
 using Domain.DTOs.SubCategory;
@@ -10,16 +11,20 @@ namespace The_gate.Controllers
     {
         private readonly ISubCategory subCategory;
         private readonly ICategory Category;
-        public SubCategoryController(ISubCategory sub, ICategory category)
+        private readonly IImageService _image;
+        public SubCategoryController(ISubCategory sub, ICategory category, IImageService image)
         {
             subCategory = sub;
             Category = category;
+            _image = image;
         }
+        //****************************************************************************************
         public IActionResult Index()
         {
             var sub = subCategory.GetAll();
             return PartialView("_IndexToSubCategory", sub);
         }
+        //****************************************************************************************
         [HttpGet]
         public IActionResult Add_SubCategory()
         {
@@ -27,52 +32,36 @@ namespace The_gate.Controllers
             ViewBag.sub = Category.GetAll();
             return View();
         }
+        //****************************************************************************************
         [HttpPost]
-        public IActionResult Add_SubCategory(SubCategoryDto category)
+        public IActionResult Add_SubCategory(SubCategoryDto subcategory)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+
+                string imagePath = _image.SaveImage(subcategory.Imagefile, "images");
+
+                var cat = new SubCategory
                 {
-                    string imagePath = "";
-                    if (category.Imagefile != null && category.Imagefile.Length > 0)
-                    {
-                        // تحديد المسار الذي ستحفظ فيه الصورة
-                        var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
-                        // إنشاء اسم فريد للصورة لتفادي التكرار
-                        var uniqueFileName = Guid.NewGuid().ToString() + "_" + category.Imagefile.FileName;
-                        var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    Image = imagePath,
+                    IsActive = subcategory.IsActive,
+                    NameA = subcategory.NameA,
+                    NameE = subcategory.NameE,
+                    categoryId = subcategory.categoryId
+                };
 
-                        // حفظ الصورة فعلياً
-                        using (var stream = new FileStream(filePath, FileMode.Create))
-                        {
-                            category.Imagefile.CopyTo(stream);
-                        }
+                subCategory.Add(cat);
+                subCategory.Save();
 
-                        // حفظ المسار النسبي للصورة لقاعدة البيانات
-                        imagePath = "/images/" + uniqueFileName;
-                    }
-                    var cat = new SubCategory
-                    {
-                        Image = imagePath,
-                        IsActive = category.IsActive,
-                        NameA = category.NameA,
-                        NameE = category.NameE,
-                        categoryId = category.categoryId,
+                return RedirectToAction("HomePage", "Admin");
 
-                    };
-                    subCategory.Add(cat);
-                    subCategory.Save();
-                    return RedirectToAction("HomePage", "Admin");
-                }
             }
-            catch (Exception ex)
-            {
-                ModelState.AddModelError("categoryId", "error in categoryid");
-            }
+
             ViewBag.sub = Category.GetAll();
-            return View(category);
+            return View(subcategory);
         }
+
+        //****************************************************************************************
         [HttpGet]
         public IActionResult Edit_SubCategory(int id)
         {
@@ -88,12 +77,13 @@ namespace The_gate.Controllers
             return View(dto);
 
         }
+        //****************************************************************************************
         [HttpPost]
         public IActionResult Edit_SubCategory(SubCategoryDto category, int id)
         {
             if (ModelState.IsValid)
             {
-                var existingCategory = subCategory.GetById(id); // جلب الكاتيجوري من قاعدة البيانات
+                var existingCategory = subCategory.GetById(id);
                 if (existingCategory == null)
                 {
                     return NotFound();
@@ -102,16 +92,7 @@ namespace The_gate.Controllers
                 // إذا تم رفع صورة جديدة
                 if (category.Imagefile != null && category.Imagefile.Length > 0)
                 {
-                    var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
-                    var uniqueFileName = Guid.NewGuid().ToString() + "_" + category.Imagefile.FileName;
-                    var filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        category.Imagefile.CopyTo(stream);
-                    }
-
-                    // حذف الصورة القديمة إن وجدت (اختياري)
+                    // حذف الصورة القديمة إن وجدت
                     if (!string.IsNullOrEmpty(existingCategory.Image))
                     {
                         var oldImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", existingCategory.Image.TrimStart('/'));
@@ -121,23 +102,24 @@ namespace The_gate.Controllers
                         }
                     }
 
-                    existingCategory.Image = "/images/" + uniqueFileName;
+                    // حفظ الصورة الجديدة عن طريق الخدمة
+                    string imagePath = _image.SaveImage(category.Imagefile, "images");
+                    existingCategory.Image = imagePath;
                 }
 
-                // تحديث البيانات الأخرى
+                // تحديث باقي البيانات
                 existingCategory.NameA = category.NameA;
                 existingCategory.NameE = category.NameE;
                 existingCategory.IsActive = category.IsActive;
                 existingCategory.categoryId = category.categoryId;
 
-
-                subCategory.Update(existingCategory); // تحديث الكائن
-                subCategory.Save(); // حفظ التغييرات
+                subCategory.Update(existingCategory);
+                subCategory.Save();
 
                 return RedirectToAction("HomePage", "Admin");
             }
-            ViewBag.sub = Category.GetAll();
 
+            ViewBag.sub = Category.GetAll();
             return View(category);
 
         }

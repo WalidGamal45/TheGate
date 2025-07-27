@@ -20,11 +20,11 @@ namespace Domain.DTOs.SubCategory
         [RegularExpression(@"^[\u0600-\u06FF\s]+$", ErrorMessage = "الاسم العربي يجب أن يكون باللغة العربية ")]
         public string NameA { get; set; }
 
-        
+        [Required(ErrorMessage ="enter the image")]
         public IFormFile? Imagefile { get; set; }
 
         public bool IsActive { get; set; }
-        [Required]
+        [Range(1, int.MaxValue, ErrorMessage = "please enter the category")]
         public int categoryId { get; set; }
     }
 }

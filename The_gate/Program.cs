@@ -16,6 +16,7 @@ builder.Services.AddScoped<IAdmin, AdminService>();
 builder.Services.AddScoped<ICategory, CategoryServices>();
 builder.Services.AddScoped<ISubCategory, SubCategroyServices>();
 builder.Services.AddScoped<IProduct, ProductServices>();
+builder.Services.AddScoped<IImageService, ImageServices>();
 
 
 

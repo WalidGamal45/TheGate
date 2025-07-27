@@ -19,7 +19,7 @@ namespace Domain.Domains
         public string? Image { get; set; }
 
         public bool IsActive { get; set; }
-      
+        
         public int categoryId { get; set; }
         public Category? category { get; set; }
 

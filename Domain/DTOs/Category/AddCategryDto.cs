@@ -12,7 +12,7 @@ namespace Domain.DTOs.Category
         [RegularExpression(@"^[\u0600-\u06FF\s]+$", ErrorMessage = "الاسم العربي يجب أن يكون باللغة العربية ")]
 
         public string NameA { get; set; }
-
+        [Required (ErrorMessage ="please enter the image")]
         public IFormFile Imagefile { get; set; }
 
         public bool IsActive { get; set; }

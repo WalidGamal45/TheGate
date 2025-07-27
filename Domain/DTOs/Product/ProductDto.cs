@@ -13,8 +13,11 @@ namespace Domain.DTOs.Product
         [RegularExpression(@"^[\u0600-\u06FF\s]+$", ErrorMessage = "الاسم العربي يجب أن يكون باللغة العربية ")]
         public string NameA { get; set; }
         public int Price { get; set; }
+        [Required(ErrorMessage ="enter the image")]
         public IFormFile? Imagefile { get; set; }
+        [Range(1, int.MaxValue ,ErrorMessage ="please select category")]
         public int categoryId { get; set; }
+        [Range(1, int.MaxValue, ErrorMessage = "please select subcategory")]
         public int SubCategoryId { get; set; }
 
     }

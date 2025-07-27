@@ -67,6 +67,7 @@ namespace The_gate.Controllers
 
                 return RedirectToAction("HomePage", "Admin");
             }
+
             return View(adminDto);
         }
         [HttpGet]
