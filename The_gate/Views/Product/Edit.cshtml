@@ -33,25 +33,46 @@
     </div>
     <div>
         <label asp-for="categoryId"></label>
-        <select asp-for="categoryId" class="form-control" asp-items="selects1">
-            <option value="0">__select_category__</option>
+        <select asp-for="categoryId" id="categorySelect" class="form-control">
+            <option value="0">__select category __ </option>
+            @foreach (var cat in ViewBag.cat)
+            {
+                <option value="@cat.Id">@cat.NameA</option>
+            }
         </select>
         <span asp-validation-for="categoryId" class="text-danger"></span>
     </div>
+
     <div>
         <label asp-for="SubCategoryId"></label>
-        <select asp-for="SubCategoryId" class="form-control" asp-items="selects2">
-            <option value="0">__select_category__</option>
+        <select asp-for="SubCategoryId" id="subCategorySelect" class="form-control">
+            <option value="0">__select subcategory __ </option>
         </select>
-        <span asp-validation-for="categoryId" class="text-danger"></span>
+        <span asp-validation-for="SubCategoryId" class="text-danger"></span>
     </div>
+
 
     <input type="submit" value="Edit" class="btn btn-primary" />
 
 </form>
 <a asp-action="HomePage" asp-controller="Admin" class="btn btn-success">Back To Home</a>
 @section Scripts {
-
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+            $('#categorySelect').on('change', function () {
+                var catId = $(this).val();
+
+                $('#subCategorySelect').empty().append('<option>جاري التحميل...</option>');
+
+                $.get('/Product/GetSubByCat', { categoryId: catId }, function (data) {
+                    $('#subCategorySelect').empty().append('<option value="">--select the sub to this category--</option>');
+                    $.each(data, function (i, item) {
+                        $('#subCategorySelect').append('<option value="' + item.id + '">' + item.nameA + '</option>');
+                    });
+                });
+            });
+        });
+    </script>
 }
 
