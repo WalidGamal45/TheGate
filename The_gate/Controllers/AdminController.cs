@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace The_gate.Controllers
 {
+    //Admin
     public class AdminController : Controller
     {
         private readonly IAdmin _admin;
