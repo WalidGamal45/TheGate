@@ -10,7 +10,7 @@ using Persistence;
 
 namespace Persistence.Migrations
 {
-    [DbContext(typeof(AdminDBContext))]
+    [DbContext(typeof(TheGatDBContext))]
     [Migration("20250725093147_imag")]
     partial class imag
     {

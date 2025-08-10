@@ -10,7 +10,7 @@ using Persistence;
 
 namespace Persistence.Migrations
 {
-    [DbContext(typeof(AdminDBContext))]
+    [DbContext(typeof(TheGatDBContext))]
     [Migration("20250717200014_newadd3")]
     partial class newadd3
     {

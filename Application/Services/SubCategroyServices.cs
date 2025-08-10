@@ -7,8 +7,8 @@ namespace Application.Services
 {
     public class SubCategroyServices:ISubCategory
     {
-        private readonly AdminDBContext _context;
-        public SubCategroyServices(AdminDBContext category)
+        private readonly TheGatDBContext _context;
+        public SubCategroyServices(TheGatDBContext category)
         {
             _context = category;
         }

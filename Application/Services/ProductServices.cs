@@ -8,8 +8,8 @@ namespace Application.Services
 {
     public class ProductServices : IProduct
     {
-        private readonly AdminDBContext _dbContext;
-        public ProductServices(AdminDBContext context)
+        private readonly TheGatDBContext _dbContext;
+        public ProductServices(TheGatDBContext context)
         {
             _dbContext = context;
         }

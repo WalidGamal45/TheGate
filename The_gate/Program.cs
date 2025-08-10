@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 // Connection String
-builder.Services.AddDbContext<AdminDBContext>(options =>
+builder.Services.AddDbContext<TheGatDBContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("WalidConnection")));
 //Dependency Injection
 builder.Services.AddScoped<IAdmin, AdminService>();

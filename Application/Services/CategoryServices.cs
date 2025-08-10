@@ -10,8 +10,8 @@ namespace Application.Services
 {
     public class CategoryServices : ICategory
     {
-        private readonly AdminDBContext _context;
-        public CategoryServices(AdminDBContext category)
+        private readonly TheGatDBContext _context;
+        public CategoryServices(TheGatDBContext category)
         {
             _context = category;
         }

@@ -8,9 +8,9 @@ namespace Application.Services
 {
     public class AdminService :IAdmin
     {
-        private readonly AdminDBContext dBContext;
+        private readonly TheGatDBContext dBContext;
 
-        public AdminService(AdminDBContext adminDB)
+        public AdminService(TheGatDBContext adminDB)
         {
             dBContext = adminDB;
         }
