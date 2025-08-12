@@ -1,0 +1,25 @@
+﻿@model User
+@{
+    ViewData["Title"] = "Login";
+    Layout = "_MyLayout";
+}
+
+<form asp-controller="User" asp-action="Login" method="post">
+    <div>
+        <label asp-for="UserName"></label>
+        <input asp-for="UserName" class="form form-control" />
+        <span asp-validation-for="UserName" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="PassWord"></label>
+        <input asp-for="PassWord" class="form form-control" />
+        <span asp-validation-for="PassWord" class="text-danger"></span>
+    </div>
+    
+    <input type="submit" value="Login" class="btn btn-primary" />
+   
+</form>
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+}

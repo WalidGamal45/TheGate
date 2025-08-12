@@ -17,6 +17,7 @@ builder.Services.AddScoped<ICategory, CategoryServices>();
 builder.Services.AddScoped<ISubCategory, SubCategroyServices>();
 builder.Services.AddScoped<IProduct, ProductServices>();
 builder.Services.AddScoped<IImageService, ImageServices>();
+builder.Services.AddScoped<IUser, UserServices>();
 
 
 
@@ -35,6 +36,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Admin}/{action=Login}/{id?}");
+    pattern: "{controller=User}/{action=Login}/{id?}");
 
 app.Run();

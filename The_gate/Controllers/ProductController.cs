@@ -147,5 +147,7 @@ namespace The_gate.Controllers
             product.Save();
             return RedirectToAction("HomePage", "Admin");
         }
+       
+
     }
 }

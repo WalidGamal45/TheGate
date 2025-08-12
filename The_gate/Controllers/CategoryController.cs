@@ -125,6 +125,9 @@ namespace The_gate.Controllers
             _category.Save();
             return RedirectToAction("HomePage", "Admin");
         }
+        //*******************************************************************
+   
+
 
     }
 }

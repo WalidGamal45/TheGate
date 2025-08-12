@@ -1,0 +1,51 @@
+﻿@model List<Category>
+@* @{
+    Layout = "_MyLayout";
+} *@
+
+<div class="row" id="categoryContainer">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 mb-3">
+            <div class="card" style="width: 18rem;">
+                <img src="@Url.Content(item.Image)" alt="no image" style="width:200px" />
+                <div class="card-body">
+                    <h5 class="card-title">Categories</h5>
+                    <p class="card-text">@item.NameA</p>
+                    <a href="#" class="btn btn-primary btn-load-sub" data-id="@item.Id">SubCategories</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<hr />
+
+<!-- الحتتين دول هيتعبوا بالـ AJAX -->
+<div id="subcatContainer"></div>
+<div id="productContainer"></div>
+
+<!-- jQuery (لو مش ضايفه) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(function(){
+        // طلب SubCategories
+        $('#categoryContainer').on('click', '.btn-load-sub', function(e){
+            e.preventDefault();
+            var catId = $(this).data('id');
+            $.get('@Url.Action("DisplaySubCategory", "User")', { id: catId }, function(html){
+                $('#subcatContainer').html(html);
+                $('#productContainer').empty();
+            });
+        });
+
+        // طلب Products (delegated because subcats ديناميكيين)
+        $('#subcatContainer').on('click', '.btn-load-prod', function(e){
+            e.preventDefault();
+            var subId = $(this).data('id');
+            $.get('@Url.Action("DisplayProduct", "User")', { id: subId }, function(html){
+                $('#productContainer').html(html);
+            });
+        });
+    });
+</script>

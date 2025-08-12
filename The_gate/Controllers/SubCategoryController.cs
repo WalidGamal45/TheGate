@@ -1,7 +1,5 @@
 ﻿using Application.Interfaces;
-using Application.Services;
 using Domain.Domains;
-using Domain.DTOs.Category;
 using Domain.DTOs.SubCategory;
 using Microsoft.AspNetCore.Mvc;
 
@@ -129,5 +127,9 @@ namespace The_gate.Controllers
             subCategory.Save();
             return RedirectToAction("HomePage", "Admin");
         }
+       
+       
+
+
     }
 }

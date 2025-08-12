@@ -16,13 +16,13 @@ namespace Application.Services
 
         public void Add(UserDto userDto)
         {
-           if (userDto != null)
+            if (userDto != null)
             {
-               var user =new User()
-               {
-                   UserName = userDto.UserName,
-                   PassWord = userDto.PassWord
-               };
+                var user = new User()
+                {
+                    UserName = userDto.UserName,
+                    PassWord = userDto.PassWord
+                };
                 _context.Users.Add(user);
             }
         }
@@ -38,11 +38,11 @@ namespace Application.Services
 
         public void Edit(UserDto user, int id)
         {
-           var olduser=GetById(id);
+            var olduser = GetById(id);
             if (olduser != null)
             {
-               olduser.UserName = user.UserName;
-               olduser.PassWord = user.PassWord;
+                olduser.UserName = user.UserName;
+                olduser.PassWord = user.PassWord;
             }
         }
 
@@ -59,7 +59,7 @@ namespace Application.Services
 
         public IEnumerable<User> GetUsers()
         {
-            var users= _context.Users.ToList();
+            var users = _context.Users.ToList();
             return users;
         }
 
