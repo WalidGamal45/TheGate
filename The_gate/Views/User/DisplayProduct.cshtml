@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "DisplayProduct";
+}
+@model List<Product>
+
+<div class="row g-4">
+    @foreach (var item in Model)
+    {
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="card h-100 shadow-sm border-0">
+                <img src="@Url.Content(item.Imagep)"
+                     class="card-img-top"
+                     alt="no image"
+                     style="height:200px; object-fit:cover;" />
+                <div class="card-body text-center">
+                    <h5 class="card-title fw-bold">Products</h5>
+                    <p class="card-text text-muted">@item.NameA</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>

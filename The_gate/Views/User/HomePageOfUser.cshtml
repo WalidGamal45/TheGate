@@ -1,26 +1,43 @@
 ﻿@model List<Category>
-@* @{
-    Layout = "_MyLayout";
-} *@
 
-<div class="row" id="categoryContainer">
+<div class="row g-4" id="categoryContainer">
     @foreach (var item in Model)
     {
-        <div class="col-md-4 mb-3">
-            <div class="card" style="width: 18rem;">
-                <img src="@Url.Content(item.Image)" alt="no image" style="width:200px" />
-                <div class="card-body">
-                    <h5 class="card-title">Categories</h5>
-                    <p class="card-text">@item.NameA</p>
-                    <a href="#" class="btn btn-primary btn-load-sub" data-id="@item.Id">SubCategories</a>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="card h-100 shadow-sm">
+                <img src="@Url.Content(item.Image)" class="card-img-top" alt="no image" style="height:300px; object-fit:cover;" />
+                <div class="card-body text-center">
+                    <h5 class="card-title fw-bold">Categories</h5>
+                    <p class="card-text text-muted">@item.NameA</p>
+                    <a asp-controller="User"
+                       asp-action="DisplaySubCategory"
+                       asp-route-id="@item.Id"
+                       class="btn btn-primary btn-load-sub">
+                        SubCategories
+                    </a>
                 </div>
             </div>
         </div>
     }
 </div>
 
-<hr />
-<div id="subcatContainer"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* @{
+    Layout = "_MyLayout";
+} *@
+@* <div id="subcatContainer"></div>
 <div id="productContainer"></div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -45,4 +62,4 @@
             });
         });
     });
-</script>
+</script> *@

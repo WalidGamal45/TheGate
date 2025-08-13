@@ -54,14 +54,14 @@ namespace The_gate.Controllers
         {
           
             var list = _subcategory.GetAll().Where(s => s.categoryId == id).ToList();
-            return PartialView("_SubCategoryList", list);
+            return View(list);
         }
 
         [HttpGet]
         public IActionResult DisplayProduct(int id) 
         {
             var list = _product.GetAll().Where(p => p.SubCategoryId == id).ToList();
-            return PartialView("_ProductList", list);
+            return View( list);
         }
     }
 }
