@@ -50,18 +50,37 @@ namespace The_gate.Controllers
         }
 
         [HttpGet]
-        public IActionResult DisplaySubCategory(int id) 
+        public IActionResult DisplaySubCategory(int id)
         {
-          
-            var list = _subcategory.GetAll().Where(s => s.categoryId == id).ToList();
+            var list = _subcategory.GetAll()
+                .Where(s => s.categoryId == id)
+                .ToList();
+
+            if (!list.Any())  
+            {
+                ViewBag.Message = "Not found SubCategories ";
+                return View(new List<SubCategory>());
+            }
+
             return View(list);
         }
 
+
         [HttpGet]
-        public IActionResult DisplayProduct(int id) 
+        public IActionResult DisplayProduct(int id)
         {
-            var list = _product.GetAll().Where(p => p.SubCategoryId == id).ToList();
-            return View( list);
+            var list = _product.GetAll()
+                .Where(p => p.SubCategoryId == id)
+                .ToList();
+
+            if (!list.Any()) 
+            {
+                ViewBag.Message = "Not found Products ";
+                return View(new List<Product>()); 
+            }
+
+            return View(list);
         }
+
     }
 }
