@@ -20,16 +20,13 @@
 </div>
 
 <hr />
-
-<!-- الحتتين دول هيتعبوا بالـ AJAX -->
 <div id="subcatContainer"></div>
 <div id="productContainer"></div>
 
-<!-- jQuery (لو مش ضايفه) -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(function(){
-        // طلب SubCategories
+
         $('#categoryContainer').on('click', '.btn-load-sub', function(e){
             e.preventDefault();
             var catId = $(this).data('id');
@@ -39,7 +36,7 @@
             });
         });
 
-        // طلب Products (delegated because subcats ديناميكيين)
+       
         $('#subcatContainer').on('click', '.btn-load-prod', function(e){
             e.preventDefault();
             var subId = $(this).data('id');

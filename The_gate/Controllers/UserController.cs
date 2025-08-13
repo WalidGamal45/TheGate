@@ -25,6 +25,7 @@ namespace The_gate.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Login(User user1)
         {
             var user2= user.GetUsers().FirstOrDefault(x=>x.UserName==user1.UserName&&x.PassWord==user1.PassWord);
@@ -32,6 +33,7 @@ namespace The_gate.Controllers
             {
                 return RedirectToAction("HomePageOfUser");
             }
+            ViewBag.Error = "the username or password is error";
             return View();
         }
         public IActionResult GetAllUsers()
@@ -48,15 +50,15 @@ namespace The_gate.Controllers
         }
 
         [HttpGet]
-        public IActionResult DisplaySubCategory(int id) // id = CategoryId
+        public IActionResult DisplaySubCategory(int id) 
         {
-            // أفضل لو عندك method مثل _subcategory.GetByCategoryId(id)
+          
             var list = _subcategory.GetAll().Where(s => s.categoryId == id).ToList();
             return PartialView("_SubCategoryList", list);
         }
 
         [HttpGet]
-        public IActionResult DisplayProduct(int id) // id = SubCategoryId
+        public IActionResult DisplayProduct(int id) 
         {
             var list = _product.GetAll().Where(p => p.SubCategoryId == id).ToList();
             return PartialView("_ProductList", list);

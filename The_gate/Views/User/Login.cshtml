@@ -19,6 +19,11 @@
     <input type="submit" value="Login" class="btn btn-primary" />
    
 </form>
+
+@if (ViewBag.Error != null)
+{
+    <div class="text-danger mt-4 accordion-body">@ViewBag.Error</div>
+}
 @section Scripts {
 
     <partial name="_ValidationScriptsPartial" />
