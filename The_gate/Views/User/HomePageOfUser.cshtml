@@ -1,11 +1,44 @@
 ﻿@model List<Category>
 
-<div class="row g-4" id="categoryContainer">
+<!-- Banner -->
+<div id="categoryBanner" class="carousel slide mb-4" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="~/images/cn_8.webp"
+                 class="d-block w-100"
+                 alt="Banner 1"
+                 style="height:40vh; object-fit:fill;" />
+        </div>
+        <div class="carousel-item">
+            <img src="~/images/Banner3.webp"
+                 class="d-block w-100"
+                 alt="Banner 2"
+                 style="height:40vh; object-fit:fill;" />
+        </div>
+        <div class="carousel-item">
+            <img src="~/images/cn_3.webp"
+                 class="d-block w-100"
+                 alt="Banner 3"
+                 style="height:40vh; object-fit:fill;" />
+        </div>
+    </div>
+
+    <!-- أزرار التحكم -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#categoryBanner" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#categoryBanner" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </button>
+</div>
+
+<!-- Cards -->
+<div class="row g-4 mt-4" id="categoryContainer">
     @foreach (var item in Model)
     {
         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
             <div class="card h-100 shadow-sm">
-                <img src="@Url.Content(item.Image)" class="card-img-top" alt="no image" style="height:300px; object-fit:cover;" />
+                <img src="@Url.Content(item.Image)" class="card-img-top" alt="no image" style="height:400px; object-fit: fill;" />
                 <div class="card-body text-center">
                     <h5 class="card-title fw-bold">Categories</h5>
                     <p class="card-text text-muted">@item.NameA</p>
@@ -20,46 +53,3 @@
         </div>
     }
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@* @{
-    Layout = "_MyLayout";
-} *@
-@* <div id="subcatContainer"></div>
-<div id="productContainer"></div>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(function(){
-
-        $('#categoryContainer').on('click', '.btn-load-sub', function(e){
-            e.preventDefault();
-            var catId = $(this).data('id');
-            $.get('@Url.Action("DisplaySubCategory", "User")', { id: catId }, function(html){
-                $('#subcatContainer').html(html);
-                $('#productContainer').empty();
-            });
-        });
-
-       
-        $('#subcatContainer').on('click', '.btn-load-prod', function(e){
-            e.preventDefault();
-            var subId = $(this).data('id');
-            $.get('@Url.Action("DisplayProduct", "User")', { id: subId }, function(html){
-                $('#productContainer').html(html);
-            });
-        });
-    });
-</script> *@
