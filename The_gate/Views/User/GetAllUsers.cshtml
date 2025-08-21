@@ -8,6 +8,8 @@
         <th>Id</th>
         <th>UserName</th>
         <th>PassWord</th>
+        <th>Edit</th>
+        <th>Delete</th>
     </tr>
     @foreach(var item in Model)
     {
@@ -15,6 +17,8 @@
             <td>@item.Id</td>
             <td>@item.UserName</td>
             <td>@item.PassWord</td>
+            <td><a asp-controller="User" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success">Edit</a></td>
+            <td><a asp-controller="User" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a></td>
         </tr>
     }
 

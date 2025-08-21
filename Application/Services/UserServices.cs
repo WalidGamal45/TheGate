@@ -36,7 +36,7 @@ namespace Application.Services
             }
         }
 
-        public void Edit(UserDto user, int id)
+        public void Edit(User user, int id)
         {
             var olduser = GetById(id);
             if (olduser != null)

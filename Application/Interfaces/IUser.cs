@@ -8,7 +8,7 @@ namespace Application.Interfaces
         IEnumerable<User> GetUsers();
         User GetById(int id);
         void Add(UserDto user);
-        void Edit(UserDto user,int id);
+        void Edit(User user,int id);
         void Delete(int id);
         void Save();
 

@@ -1,0 +1,26 @@
+﻿@using Domain.DTOs.Users
+@model UserDto
+@{
+    ViewData["Title"] = "Register";
+}
+
+<form asp-controller="User" asp-action="Register" method="post" >
+   <div>
+        <label asp-for="UserName"></label>
+        <input asp-for="UserName" class="form form-control" />
+        <span asp-validation-for="UserName" class="text-danger"></span>
+   </div>
+    <div>
+        <label asp-for="PassWord"></label>
+        <input asp-for="PassWord" class="form form-control" />
+        <span asp-validation-for="PassWord" class="text-danger"></span>
+    </div>
+    <input type="submit" value="Regist" class="btn btn-success" />
+
+</form>
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+}
+
+

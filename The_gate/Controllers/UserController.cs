@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces;
 using Domain.Domains;
+using Domain.DTOs.Users;
 using Microsoft.AspNetCore.Mvc;
 
 namespace The_gate.Controllers
@@ -42,7 +43,35 @@ namespace The_gate.Controllers
 
             return View(users);
         }
-       
+        public IActionResult Delete(int id )
+        {
+            var use=user.GetById(id);
+            if (use != null)
+            {
+                user.Delete(id);
+                user.Save();
+            }
+            return RedirectToAction("GetAllUsers");
+        }
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var use=user.GetById(id);
+            return View(use);
+        }
+        [HttpPost]
+        public IActionResult Edit(User use,int id)
+        {
+            var us=user.GetById(id);
+            if (us != null)
+            {
+                user.Edit(use,id);
+                user.Save();
+            }
+            return RedirectToAction("GetAllUsers");
+        }
+
+
         public IActionResult HomePageOfUser()
         {
             var catList = _category.GetAll();
@@ -81,6 +110,20 @@ namespace The_gate.Controllers
 
             return View(list);
         }
-
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Register(UserDto user3)
+        {
+            if (user3 != null)
+            {
+                user.Add(user3);
+                user.Save();
+            }
+            return View();
+        }
     }
 }

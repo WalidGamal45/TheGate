@@ -1,0 +1,24 @@
+﻿@model User
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<form asp-controller="User" asp-action="Edit" method="post">
+    <div>
+        <label asp-for="UserName"></label>
+        <input asp-for="UserName" class="form form-control" />
+        <span asp-validation-for="UserName" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="PassWord"></label>
+        <input asp-for="PassWord" class="form form-control" />
+        <span asp-validation-for="PassWord" class="text-danger"></span>
+    </div>
+    <input type="submit" value="Edit" class="btn btn-success" />
+
+</form>
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+}
+
