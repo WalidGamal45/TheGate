@@ -8,11 +8,11 @@ namespace Domain.Domains
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "please enter the name")]
-        [RegularExpression(@"^[A-Za-z\s]+$", ErrorMessage = "the name en must be english language")]
+        [RegularExpression(@"^[A-Za-z0-9\s]+$", ErrorMessage = "The name must contain English letters and numbers only")]
         public string NameE { get; set; }
 
         [Required(ErrorMessage = "الاسم العربى ")]
-        [RegularExpression(@"^[\u0600-\u06FF\s]+$", ErrorMessage = "الاسم العربي يجب أن يكون باللغة العربية ")]
+        [RegularExpression(@"^[\u0600-\u06FF0-9\s]+$", ErrorMessage = "الاسم العربي يجب أن يحتوي على حروف عربية وأرقام فقط")]
         public string NameA { get; set; }
         public int Price { get; set; }
         [Required]
