@@ -38,18 +38,20 @@
     {
         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
             <div class="card h-100 shadow-sm">
-                <img src="@Url.Content(item.Image)" class="card-img-top" alt="no image" style="height:400px; object-fit: fill;" />
+                <a asp-controller="User"
+                   asp-action="DisplaySubCategory"
+                   asp-route-id="@item.Id">
+                    <img src="@Url.Content(item.Image)"
+                         class="card-img-top"
+                         alt="no image"
+                         style="height:400px; object-fit: scale-down;" />
+                </a>
                 <div class="card-body text-center">
-                    <h5 class="card-title fw-bold">Categories</h5>
+                    <h5 class="card-title fw-bold">@item.NameE</h5>
                     <p class="card-text text-muted">@item.NameA</p>
-                    <a asp-controller="User"
-                       asp-action="DisplaySubCategory"
-                       asp-route-id="@item.Id"
-                       class="btn btn-primary btn-load-sub">
-                        SubCategories
-                    </a>
                 </div>
             </div>
         </div>
     }
 </div>
+

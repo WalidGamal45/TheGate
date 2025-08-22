@@ -123,7 +123,7 @@ namespace The_gate.Controllers
                 user.Add(user3);
                 user.Save();
             }
-            return View();
+            return RedirectToAction("GetAllUsers");
         }
     }
 }

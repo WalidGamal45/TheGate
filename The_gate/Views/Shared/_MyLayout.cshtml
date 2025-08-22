@@ -29,9 +29,7 @@
                 <div class="col-xl-6">
                     <div class="text-center text-white">
                         <!-- Page heading-->
-                        <div>
-                            <a asp-controller="User" asp-action="Register" class="btn btn-lg btn-success"> Register </a>
-                        </div>
+                      
                         <h1 class="mb-5">The Gate</h1>
                         
                   
@@ -45,8 +43,10 @@
                                 </div>
                             </div>
                             <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
+                          
                         </form>
                         @RenderBody()
+                    
                        
                     </div>
                 </div>

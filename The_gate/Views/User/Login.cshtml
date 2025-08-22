@@ -15,9 +15,12 @@
         <input asp-for="PassWord" class="form form-control" />
         <span asp-validation-for="PassWord" class="text-danger"></span>
     </div>
-    
-    <input type="submit" value="Login" class="btn btn-primary" />
-   
+    <div class="d-flex justify-content-center mt-3">
+        <input type="submit" value="  Login  " class="btn btn-primary me-5" />
+        <a asp-controller="User" asp-action="Register" class="btn btn-success">Register</a>
+    </div>
+
+
 </form>
 
 @if (ViewBag.Error != null)
