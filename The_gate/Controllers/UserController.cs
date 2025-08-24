@@ -2,6 +2,9 @@
 using Domain.Domains;
 using Domain.DTOs.Users;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using System.Net.Mail;
+
 
 namespace The_gate.Controllers
 {
@@ -118,12 +121,73 @@ namespace The_gate.Controllers
         [HttpPost]
         public IActionResult Register(UserDto user3)
         {
-            if (user3 != null)
+            if (ModelState.IsValid)
             {
                 user.Add(user3);
                 user.Save();
+                var savedUser = user.GetByEmail(user3.Email);
+
+                SendConfirmationEmail(savedUser.Email, savedUser.VerificationCode);
+
+                return RedirectToAction("ConfirmEmail", new { email = user3.Email });
             }
-            return RedirectToAction("GetAllUsers");
+
+            return View(user3);
         }
+
+
+        [HttpGet]
+        public IActionResult ConfirmEmail(string email)
+        {
+            ViewBag.Email = email;
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ConfirmEmail(string email, string verificationCode)
+        {
+            var user3 = user.GetByEmail(email);
+            if (user3 != null && user3.VerificationCode == verificationCode)
+            {
+                user3.IsConfirmed = true;
+                user.Edit(user3, user3.Id);
+                user.Save();
+                return RedirectToAction("GetAllUsers");
+            }
+
+            ViewBag.Error = "Invalid code";
+            return View();
+        }
+        private void SendConfirmationEmail(string toEmail, string code)
+        {
+            if (string.IsNullOrEmpty(toEmail))
+                return;
+
+            try
+            {
+                var mail = new MailMessage();
+                mail.From = new MailAddress("yourEmail@gmail.com");
+                mail.To.Add(toEmail);
+                mail.Subject = "Confirm your email";
+                mail.Body = $"Your confirmation code is: {code}";
+
+                using (var smtp = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    smtp.Credentials = new NetworkCredential("yourEmail@gmail.com", "yourAppPassword");
+                    smtp.EnableSsl = true;
+                    smtp.Send(mail);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Email Error: " + ex.Message);
+            }
+        
+
     }
+
+
+
+
+}
 }

@@ -11,6 +11,7 @@ namespace Application.Interfaces
         void Edit(User user,int id);
         void Delete(int id);
         void Save();
+        User GetByEmail(string email);
 
     }
 }

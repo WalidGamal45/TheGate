@@ -14,5 +14,9 @@ namespace Domain.Domains
         [MinLength(5, ErrorMessage = "the minlength is : 5")]
         [DataType (DataType.Password)]
         public string PassWord { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
+        public string VerificationCode { get; set; }
+        public bool IsConfirmed { get; set; }
     }
 }

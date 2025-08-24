@@ -18,10 +18,15 @@ namespace Application.Services
         {
             if (userDto != null)
             {
+                var code = new Random().Next(100000, 999999).ToString();
                 var user = new User()
                 {
                     UserName = userDto.UserName,
-                    PassWord = userDto.PassWord
+                    PassWord = userDto.PassWord,
+                     Email = userDto.Email,
+                    PhoneNumber = userDto.PhoneNumber,
+                    VerificationCode = code,
+                    IsConfirmed = false
                 };
                 _context.Users.Add(user);
             }
@@ -44,6 +49,11 @@ namespace Application.Services
                 olduser.UserName = user.UserName;
                 olduser.PassWord = user.PassWord;
             }
+        }
+
+        public User GetByEmail(string email)
+        {
+            return _context.Users.FirstOrDefault(u => u.Email == email);
         }
 
         public User GetById(int id)

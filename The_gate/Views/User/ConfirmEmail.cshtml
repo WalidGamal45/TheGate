@@ -1,0 +1,24 @@
+﻿@model Domain.DTOs.Users.UserDto
+@{
+    ViewData["Title"] = "ConfirmEmail";
+}
+
+<h2>Confirm Email</h2>
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.Error
+    </div>
+}
+
+<form asp-controller="User" asp-action="ConfirmEmail" method="post">
+    <input type="hidden" name="Email" value="@ViewBag.Email" />
+
+    <div class="mb-3">
+        <label for="VerificationCode" class="form-label">Enter Confirmation Code</label>
+        <input type="text" name="VerificationCode" class="form-control" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Confirm</button>
+</form>
