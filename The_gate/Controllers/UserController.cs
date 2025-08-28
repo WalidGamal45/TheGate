@@ -15,14 +15,14 @@ namespace The_gate.Controllers
         private readonly ISubCategory _subcategory;
         private readonly IProduct _product;
 
-        public UserController(IUser _user, ICategory category, ISubCategory subCategory,IProduct product)
+        public UserController(IUser _user, ICategory category, ISubCategory subCategory, IProduct product)
         {
             user = _user;
             _category = category;
             _subcategory = subCategory;
             _product = product;
         }
-       
+
         [HttpGet]
         public IActionResult Login()
         {
@@ -32,23 +32,26 @@ namespace The_gate.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Login(User user1)
         {
-            var user2= user.GetUsers().FirstOrDefault(x=>x.UserName==user1.UserName&&x.PassWord==user1.PassWord);
+            var user2 = user.GetUsers().FirstOrDefault(
+                   x => x.UserName == user1.UserName
+                         && x.PassWord == user1.PassWord
+                              );//   && x.IsConfirmed == true    لعمل التسجيل والتاكد من 6 ارقام
             if (user2 != null)
             {
                 return RedirectToAction("HomePageOfUser");
             }
-            ViewBag.Error = "the username or password is error";
+            ViewBag.Error = "Your account is not confirmed yet. Please check your email.";
             return View();
         }
         public IActionResult GetAllUsers()
         {
-            var users=user.GetUsers();
+            var users = user.GetUsers();
 
             return View(users);
         }
-        public IActionResult Delete(int id )
+        public IActionResult Delete(int id)
         {
-            var use=user.GetById(id);
+            var use = user.GetById(id);
             if (use != null)
             {
                 user.Delete(id);
@@ -59,16 +62,16 @@ namespace The_gate.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            var use=user.GetById(id);
+            var use = user.GetById(id);
             return View(use);
         }
         [HttpPost]
-        public IActionResult Edit(User use,int id)
+        public IActionResult Edit(User use, int id)
         {
-            var us=user.GetById(id);
+            var us = user.GetById(id);
             if (us != null)
             {
-                user.Edit(use,id);
+                user.Edit(use, id);
                 user.Save();
             }
             return RedirectToAction("GetAllUsers");
@@ -88,7 +91,7 @@ namespace The_gate.Controllers
                 .Where(s => s.categoryId == id)
                 .ToList();
 
-            if (!list.Any())  
+            if (!list.Any())
             {
                 ViewBag.Message = "Not found SubCategories ";
                 return View(new List<SubCategory>());
@@ -105,10 +108,10 @@ namespace The_gate.Controllers
                 .Where(p => p.SubCategoryId == id)
                 .ToList();
 
-            if (!list.Any()) 
+            if (!list.Any())
             {
                 ViewBag.Message = "Not found Products ";
-                return View(new List<Product>()); 
+                return View(new List<Product>());
             }
 
             return View(list);
@@ -121,6 +124,7 @@ namespace The_gate.Controllers
         [HttpPost]
         public IActionResult Register(UserDto user3)
         {
+            
             if (ModelState.IsValid)
             {
                 user.Add(user3);
@@ -166,14 +170,14 @@ namespace The_gate.Controllers
             try
             {
                 var mail = new MailMessage();
-                mail.From = new MailAddress("yourEmail@gmail.com");
+                mail.From = new MailAddress("alhotelkbeer123@gmail.com");
                 mail.To.Add(toEmail);
                 mail.Subject = "Confirm your email";
                 mail.Body = $"Your confirmation code is: {code}";
 
                 using (var smtp = new SmtpClient("smtp.gmail.com", 587))
                 {
-                    smtp.Credentials = new NetworkCredential("yourEmail@gmail.com", "yourAppPassword");
+                    smtp.Credentials = new NetworkCredential("alhotelkbeer123@gmail.com", "yourAppPassword");
                     smtp.EnableSsl = true;
                     smtp.Send(mail);
                 }
@@ -182,12 +186,12 @@ namespace The_gate.Controllers
             {
                 Console.WriteLine("Email Error: " + ex.Message);
             }
-        
+
+
+        }
+
+
+
 
     }
-
-
-
-
-}
 }
