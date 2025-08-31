@@ -138,6 +138,7 @@ namespace The_gate.Controllers
 
             return View(user3);
         }
+        //تأكيد عنوان البريد الإلكتروني
 
 
         [HttpGet]
