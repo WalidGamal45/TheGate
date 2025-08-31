@@ -13,6 +13,7 @@ namespace The_gate.Controllers
         public AdminController(IAdmin admin)
         {
             _admin = admin;
+
         }
         [HttpGet]
         public IActionResult Login()

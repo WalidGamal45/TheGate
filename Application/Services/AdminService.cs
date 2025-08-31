@@ -13,6 +13,7 @@ namespace Application.Services
         public AdminService(TheGatDBContext adminDB)
         {
             dBContext = adminDB;
+
         }
 
         public void Add(AddAdminDto adminDto)
