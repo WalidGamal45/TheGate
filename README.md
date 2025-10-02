@@ -1,5 +1,6 @@
 # 🏗️ The Gate Web App
-
+## 📊 Database Schema
+[ SQL scripts with sample data](https://drive.google.com/file/d/1LYZkYuL5nXasJe5OMXKZo_3HjFy5doDS/view?usp=drive_link)
 ## 📌 Project Overview
 Built a **web application** to manage and display **categories, subcategories, and products**.  
 The project follows **Clean Architecture** principles and implements:
