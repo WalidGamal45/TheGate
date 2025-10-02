@@ -1,6 +1,6 @@
 # 🏗️ The Gate Web App
 ## 📊 Database Schema
-![ERD](https://i.suar.me/npOlM/l)
+![ERD](https://suar.me/GEeYZ)
 ## 📌 Project Overview
 Built a **web application** to manage and display **categories, subcategories, and products**.  
 The project follows **Clean Architecture** principles and implements:
