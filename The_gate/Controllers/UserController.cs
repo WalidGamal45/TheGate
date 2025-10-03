@@ -178,7 +178,7 @@ namespace The_gate.Controllers
 
                 using (var smtp = new SmtpClient("smtp.gmail.com", 587))
                 {
-                    smtp.Credentials = new NetworkCredential("alhotelkbeer123@gmail.com", "yourAppPassword");
+                    smtp.Credentials = new NetworkCredential("alhotelkbeer123@gmail.com", "jrumxugnnghyxkdm");
                     smtp.EnableSsl = true;
                     smtp.Send(mail);
                 }

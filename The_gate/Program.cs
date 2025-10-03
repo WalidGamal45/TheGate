@@ -1,6 +1,7 @@
 
 using Application.Interfaces;
 using Application.Services;
+using Domain.Domains;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -18,6 +19,7 @@ builder.Services.AddScoped<ISubCategory, SubCategroyServices>();
 builder.Services.AddScoped<IProduct, ProductServices>();
 builder.Services.AddScoped<IImageService, ImageServices>();
 builder.Services.AddScoped<IUser, UserServices>();
+builder.Services.AddScoped<IBasket,BasketServices>();
 
 
 

@@ -71,6 +71,32 @@ namespace Persistence.Migrations
                     b.ToTable("admins");
                 });
 
+            modelBuilder.Entity("Domain.Domains.Basket", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Baskets");
+                });
+
             modelBuilder.Entity("Domain.Domains.Product", b =>
                 {
                     b.Property<int>("Id")

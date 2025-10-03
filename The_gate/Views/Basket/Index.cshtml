@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+@model List<Basket>
+
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Amount</th>
+        <th>Total</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Price</td>
+            <td>@item.Amount</td>
+            <td>@(item.Price* item.Amount)</td>
+            <td>
+                @Html.ActionLink("حذف", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+</table>
+
