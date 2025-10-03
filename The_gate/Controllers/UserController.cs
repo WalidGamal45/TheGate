@@ -33,16 +33,25 @@ namespace The_gate.Controllers
         public IActionResult Login(User user1)
         {
             var user2 = user.GetUsers().FirstOrDefault(
-                   x => x.UserName == user1.UserName
-                         && x.PassWord == user1.PassWord
-                              );//   && x.IsConfirmed == true    لعمل التسجيل والتاكد من 6 ارقام
-            if (user2 != null)
+                x => x.UserName == user1.UserName
+                      && x.PassWord == user1.PassWord);
+
+            if (user2 == null)
             {
-                return RedirectToAction("HomePageOfUser");
+                ViewBag.Error = "Invalid username or password.";
+                return View();
             }
-            ViewBag.Error = "Your account is not confirmed yet. Please check your email.";
-            return View();
+
+            if (!user2.IsConfirmed)
+            {
+                ViewBag.Error = "Your account is not confirmed yet. Please check your email.";
+                return View();
+            }
+
+            
+            return RedirectToAction("HomePageOfUser");
         }
+
         public IActionResult GetAllUsers()
         {
             var users = user.GetUsers();

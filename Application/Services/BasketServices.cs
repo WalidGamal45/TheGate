@@ -49,5 +49,20 @@ namespace Application.Services
             context.Baskets.Update(newbasket);
             await context.SaveChangesAsync();
         }
+        public void UpdateAmount(int id, int amount)
+        {
+            var basketItem = context.Baskets.FirstOrDefault(x => x.Id == id);
+            if (basketItem != null)
+            {
+                basketItem.Amount = amount;
+                context.SaveChanges();
+            }
+        }
+
+        public decimal GetTotal(int id)
+        {
+            var basketItem = context.Baskets.FirstOrDefault(x => x.Id == id);
+            return basketItem == null ? 0 : basketItem.Price * basketItem.Amount;
+        }
     }
 }

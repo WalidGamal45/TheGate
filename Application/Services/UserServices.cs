@@ -69,9 +69,17 @@ namespace Application.Services
 
         public IEnumerable<User> GetUsers()
         {
-            var users = _context.Users.ToList();
-            return users;
+            
+            return _context.Users.ToList();
         }
+
+        public IEnumerable<User> GetConfirmedUsers()
+        {
+
+            return _context.Users.Where(x => x.IsConfirmed).ToList();
+        }
+
+
 
         public void Save()
         {

@@ -14,7 +14,7 @@ else
         {
             <div class="col-md-4 mb-3">
                 <div class="card h-100">
-                    <img src="@Url.Content(item.Imagep)" alt="no image" class="card-img-top" style="height:250px; object-fit:cover;" />
+                    <img src="@Url.Content(item.Imagep)" alt="no image" class="card-img-top" style="height:200px; object-fit: scale-down;" />
                     <div class="card-body text-center">
                         <h5 class="card-title">@item.NameE</h5>
                        @*  <p class="card-text text-muted">@item.NameA</p> *@
@@ -23,7 +23,7 @@ else
                         <!-- زرار أضف للسلة -->
                         <form asp-action="Add" asp-controller="Basket" method="post">
                             <input type="hidden" name="ProductId" value="@item.Id" />
-                            <input type="hidden" name="Name" value="@item.NameA" />
+                            <input type="hidden" name="Name" value="@item.NameE" />
                             <input type="hidden" name="Price" value="@item.Price" />
                             <button type="submit" class="btn btn-success w-100">
                                 🛒 أضف للسلة

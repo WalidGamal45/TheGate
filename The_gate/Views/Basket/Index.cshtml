@@ -1,11 +1,6 @@
-﻿
-@{
-    ViewData["Title"] = "Index";
-}
+﻿@model List<Basket>
 
-@model List<Basket>
-
-<table class="table table-bordered table-hover">
+<table class="table table-bordered table-hover text-center align-middle">
     <tr>
         <th>Product</th>
         <th>Price</th>
@@ -18,9 +13,14 @@
     {
         <tr>
             <td>@item.Name</td>
-            <td>@item.Price</td>
-            <td>@item.Amount</td>
-            <td>@(item.Price* item.Amount)</td>
+            <td class="price">@item.Price</td>
+            <td>
+                <input type="number" class="form-control text-center amount"
+                       data-id="@item.Id"
+                       value="@item.Amount"
+                       min="1" style="width:80px;" />
+            </td>
+            <td class="total">@(item.Price* item.Amount)</td>
             <td>
                 @Html.ActionLink("حذف", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
             </td>
@@ -28,3 +28,23 @@
     }
 </table>
 
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).on("change", ".amount", function () {
+            var input = $(this);
+            var id = input.data("id");
+            var amount = input.val();
+
+            $.ajax({
+                url: "/Basket/UpdateAmountAjax",
+                type: "POST",
+                data: { id: id, amount: amount },
+                success: function (newTotal) {
+                    // تحديث العمود بتاع Total
+                    input.closest("tr").find(".total").text(newTotal);
+                }
+            });
+        });
+    </script>
+}

@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces;
+using Application.Services;
 using Domain.Domains;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,6 +36,13 @@ namespace Presentation.Controllers
         {
             await _basketRepository.DeleteAsync(id);
             return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public IActionResult UpdateAmountAjax(int id, int amount)
+        {
+            _basketRepository.UpdateAmount(id, amount);
+            var newTotal = _basketRepository.GetTotal(id);
+            return Json(newTotal);
         }
 
     }
