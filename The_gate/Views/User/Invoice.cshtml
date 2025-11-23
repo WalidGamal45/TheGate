@@ -1,24 +1,57 @@
 ﻿@model List<CartItem>
-
 <h2>Invoice</h2>
-
-<table class="table">
-    <tr>
-        <th>Product</th>
-        <th>Qty</th>
-        <th>Price</th>
-        <th>Total</th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+<table class="table table-bordered">
+    <thead class="table-light">
         <tr>
-            <td>@item.Name</td>
-            <td>@item.Quantity</td>
-            <td>@item.Price</td>
-            <td>@(item.Price* item.Quantity)</td>
+            <th>Product</th>
+            <th>Qty</th>
+            <th>Price</th>
+            <th>Total</th>
+            <th>Actions</th>
         </tr>
-    }
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr data-id="@item.ProductId">
+                <td>@item.Name</td>
+                <td class="qty">@item.Quantity</td>
+                <td>@item.Price.ToString("0.00")</td>
+                <td class="total">@( (item.Price * item.Quantity).ToString("0.00") )</td>
+                <td>
+                    <button class="btn btn-sm btn-success increase">+</button>
+                    <button class="btn btn-sm btn-danger decrease">−</button>
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
+<h3>Total: <span id="grand-total">@ViewBag.Total</span> L.E</h3>
 
-<h3>Total: @ViewBag.Total L.E</h3>
+@section Scripts {
+    <script>
+        $(document).ready(function(){
+            function updateRow(row, resp){
+                row.find(".qty").text(resp.quantity);
+                row.find(".total").text(resp.total);
+                $("#grand-total").text(resp.grandTotal);
+                $("#cart-count").text(resp.cartCount);
+            }
+
+            $(".increase").click(function(){
+                var row = $(this).closest("tr");
+                var id = row.data("id");
+                $.post("/User/ChangeQuantity", { productId: id, delta: 1 }, resp => updateRow(row, resp));
+            });
+
+            $(".decrease").click(function(){
+                var row = $(this).closest("tr");
+                var id = row.data("id");
+                $.post("/User/ChangeQuantity", { productId: id, delta: -1 }, function(resp){
+                    if(resp.quantity === 0) row.remove();
+                    else updateRow(row, resp);
+                });
+            });
+        });
+    </script>
+}

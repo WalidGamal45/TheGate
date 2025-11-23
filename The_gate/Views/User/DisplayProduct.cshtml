@@ -1,8 +1,7 @@
-﻿@{
+﻿@model List<Product>
+@{
     ViewData["Title"] = "DisplayProduct";
 }
-@model List<Product>
-
 @if (ViewBag.Message != null)
 {
     <div class="alert alert-warning text-center">@ViewBag.Message</div>
@@ -14,18 +13,46 @@ else
         {
             <div class="col-md-4 mb-3">
                 <div class="card h-100">
-                    <img src="@Url.Content(item.Imagep)" alt="no image" class="card-img-top" style="height:200px; object-fit: scale-down;" />
-                    <div class="card-body text-center">
-                        <h5 class="card-title">@item.NameE</h5>
-                       @*  <p class="card-text text-muted">@item.NameA</p> *@
-                        <p class="fw-bold">السعر: @item.Price</p>
-
-                        <!-- زرار أضف للسلة -->
-                        <a asp-controller="User" asp-action="AddToCart" asp-route-id="@item.Id"
-                           class="btn btn-primary">Add To Cart</a>
+                    <img src="@Url.Content(item.Imagep)" class="card-img-top" style="height:200px; object-fit:scale-down;" />
+                    <div class="input-group mb-3">
+                        <button class="btn btn-danger decrease">−</button>
+                        <input type="text" class="form-control text-center quantity" value="1" readonly />
+                        <button class="btn btn-success increase">+</button>
                     </div>
+                    <button class="btn btn-primary add-to-cart" data-id="@item.Id">Add to Cart</button>
                 </div>
             </div>
         }
     </div>
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function(){
+
+            $(".increase").click(function(){
+                var input = $(this).siblings(".quantity");
+                input.val(parseInt(input.val()) + 1);
+            });
+
+            $(".decrease").click(function(){
+                var input = $(this).siblings(".quantity");
+                if(parseInt(input.val()) > 1) input.val(parseInt(input.val()) - 1);
+            });
+
+            $(".add-to-cart").click(function(e){
+                e.preventDefault();
+                var btn = $(this);
+                var productId = btn.data("id");
+                var quantity = parseInt(btn.siblings(".input-group").find(".quantity").val());
+
+                $.post('/User/AddToCart', { id: productId, quantity: quantity }, function(response){
+                    $("#cart-count").text(response.cartCount);
+                    btn.removeClass("btn-primary").addClass("btn-success").text("Added");
+                    setTimeout(()=> btn.removeClass("btn-success").addClass("btn-primary").text("Add to Cart"), 2000);
+                });
+            });
+
+        });
+    </script>
 }

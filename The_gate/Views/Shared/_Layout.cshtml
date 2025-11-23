@@ -1,83 +1,41 @@
 ﻿@using The_gate.Extensions
+@{
+    int cartCount = Context.Session.GetInt32("CartCount") ?? 0;
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>@ViewData["Title"] - The_gate</title>
-	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-	<link rel="stylesheet" href="~/The_gate.styles.css" asp-append-version="true" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - The_gate</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/The_gate.styles.css" asp-append-version="true" />
 </head>
-@{
-	    int cartCount = Context.Session.GetInt32("CartCount") ?? 0;
-}
-
 <body style="background-color:antiquewhite">
-	<header>
-		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-			<div class="container-fluid">
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
-						aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-controller="User" asp-action="HomePageOfUser">Home</a>
+                <a class="nav-link" asp-controller="User" asp-action="Invoice" style="font-size:24px;">
+                    🛒 Cart (<span id="cart-count">@cartCount</span>)
+                </a>
+            </div>
+        </nav>
+    </header>
+    <div class="container mt-3">
+        @RenderBody()
+    </div>
+    <footer class="border-top footer text-muted" style="background-color:aquamarine">
+        <div class="container">
+            &copy; 2025 - The_gate
+        </div>
+    </footer>
 
-				<div class="navbar-collapse collapse d-sm-inline-flex">
-					<ul class="navbar-nav me-auto">
-						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="HomePageOfUser">Home-Page</a>
-						</li>
-					</ul>
-					<li class="nav-item dropdown" style="position:relative;">
-						<a class="nav-link dropdown-toggle text-dark" href="#" id="cartDropdown" role="button"
-						   data-bs-toggle="dropdown" aria-expanded="false" style="font-size:24px;">
-							🛒 Cart (<span id="cart-count">@cartCount</span>)
-						</a>
-						<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cartDropdown" style="min-width:250px;">
-							@if (Context.Session.GetObject<List<CartItem>>("Cart") is List<CartItem> cart && cart.Any())
-							{
-								@foreach (var item in cart)
-								{
-									<li class="dropdown-item d-flex justify-content-between">
-										<span>@item.Name</span>
-										<span>x @item.Quantity</span>
-									</li>
-								}
-								<li><hr class="dropdown-divider" /></li>
-								<li class="dropdown-item text-center">
-									<a class="btn btn-sm btn-success" asp-controller="User" asp-action="Invoice">Checkout</a>
-								</li>
-							}
-							else
-							{
-								<li class="dropdown-item text-center">Cart is empty</li>
-							}
-						</ul>
-					</li>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
 
-
-
-
-					<a class="navbar-brand ms-auto" asp-area="" asp-controller="User" asp-action="Login">Log_Out</a>
-				</div>
-			</div>
-		</nav>
-	</header>
-
-	<div class="container" style="margin:10px">
-		<main role="main" class="pb-3">
-			@RenderBody()
-		</main>
-	</div>
-
-	<footer class="border-top footer text-muted" style="background-color:aquamarine">
-		<div class="container">
-			&copy; 2025 - The_gate - <a asp-area="" asp-controller="User" asp-action="GetAllUsers">All_Users</a>
-		</div>
-	</footer>
-	<script src="~/lib/jquery/dist/jquery.min.js"></script>
-	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="~/js/site.js" asp-append-version="true"></script>
-	@await RenderSectionAsync("Scripts", required: false)
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
