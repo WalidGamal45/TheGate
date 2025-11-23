@@ -1,0 +1,24 @@
+﻿@model List<CartItem>
+
+<h2>Invoice</h2>
+
+<table class="table">
+    <tr>
+        <th>Product</th>
+        <th>Qty</th>
+        <th>Price</th>
+        <th>Total</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Quantity</td>
+            <td>@item.Price</td>
+            <td>@(item.Price* item.Quantity)</td>
+        </tr>
+    }
+</table>
+
+<h3>Total: @ViewBag.Total L.E</h3>

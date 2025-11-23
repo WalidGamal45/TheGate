@@ -4,6 +4,7 @@ using Domain.DTOs.Users;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Net.Mail;
+using The_gate.Extensions;
 
 
 namespace The_gate.Controllers
@@ -14,6 +15,7 @@ namespace The_gate.Controllers
         private readonly ICategory _category;
         private readonly ISubCategory _subcategory;
         private readonly IProduct _product;
+       
 
         public UserController(IUser _user, ICategory category, ISubCategory subCategory, IProduct product)
         {
@@ -21,6 +23,8 @@ namespace The_gate.Controllers
             _category = category;
             _subcategory = subCategory;
             _product = product;
+           
+
         }
 
         [HttpGet]
@@ -198,6 +202,46 @@ namespace The_gate.Controllers
             }
 
 
+        }
+        // Basket
+        public IActionResult AddToCart(int id)
+        {
+            var product = _product.GetById(id);
+            if (product == null) return NotFound();
+
+            List<CartItem> cart = HttpContext.Session.GetObject<List<CartItem>>("Cart")
+                                ?? new List<CartItem>();
+                       var existing = cart.FirstOrDefault(x => x.ProductId == id);
+
+            if (existing != null)
+            {
+                existing.Quantity++;
+            }
+            else
+            {
+                cart.Add(new CartItem
+                {
+                    ProductId = product.Id,
+                    Name = product.NameE,
+                    Price = product.Price,
+                    Quantity = 1
+                });
+            }
+
+            HttpContext.Session.SetObject("Cart", cart);
+            HttpContext.Session.SetInt32("CartCount", cart.Sum(x => x.Quantity));
+
+            return RedirectToAction("DisplayProduct", new { id = product.SubCategoryId });
+        }
+        public IActionResult Invoice()
+        {
+            var cart = HttpContext.Session.GetObject<List<CartItem>>("Cart")
+                       ?? new List<CartItem>();
+
+            decimal total = cart.Sum(x => x.Price * x.Quantity);
+            ViewBag.Total = total;
+
+            return View(cart);
         }
 
 

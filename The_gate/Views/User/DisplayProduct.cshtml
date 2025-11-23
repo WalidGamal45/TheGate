@@ -21,14 +21,8 @@ else
                         <p class="fw-bold">السعر: @item.Price</p>
 
                         <!-- زرار أضف للسلة -->
-                        <form asp-action="Add" asp-controller="Basket" method="post">
-                            <input type="hidden" name="ProductId" value="@item.Id" />
-                            <input type="hidden" name="Name" value="@item.NameE" />
-                            <input type="hidden" name="Price" value="@item.Price" />
-                            <button type="submit" class="btn btn-success w-100">
-                                🛒 أضف للسلة
-                            </button>
-                        </form>
+                        <a asp-controller="User" asp-action="AddToCart" asp-route-id="@item.Id"
+                           class="btn btn-primary">Add To Cart</a>
                     </div>
                 </div>
             </div>

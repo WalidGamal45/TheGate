@@ -1,0 +1,24 @@
+﻿@model List<CartItem>
+
+<h2>Your Cart</h2>
+
+<table class="table">
+    <tr>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Qty</th>
+        <th>Total</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Price</td>
+            <td>@item.Quantity</td>
+            <td>@(item.Price* item.Quantity)</td>
+        </tr>
+    }
+</table>
+
+<a class="btn btn-success" asp-action="Invoice">Checkout</a>

@@ -19,7 +19,9 @@ builder.Services.AddScoped<ISubCategory, SubCategroyServices>();
 builder.Services.AddScoped<IProduct, ProductServices>();
 builder.Services.AddScoped<IImageService, ImageServices>();
 builder.Services.AddScoped<IUser, UserServices>();
-builder.Services.AddScoped<IBasket,BasketServices>();
+builder.Services.AddSession();
+
+
 
 
 
@@ -39,5 +41,8 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=User}/{action=Login}/{id?}");
+
+app.UseSession();
+
 
 app.Run();
