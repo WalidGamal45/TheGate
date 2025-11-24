@@ -1,7 +1,7 @@
 ﻿@model List<Category>
 
 <!-- Banner -->
-<div style="width:1460px;" id="categoryBanner" class="carousel slide m-1" data-bs-ride="carousel">
+<div id="categoryBanner" class="carousel slide w-100" style="margin:0;" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
             <img src="~/images/bn_c.jpg"
@@ -23,7 +23,7 @@
         </div>
     </div>
 
-    <!-- أزرار التحكم -->
+    <!-- Controls -->
     <button class="carousel-control-prev" type="button" data-bs-target="#categoryBanner" data-bs-slide="prev">
         <span class="carousel-control-prev-icon"></span>
     </button>
@@ -33,25 +33,34 @@
 </div>
 
 <!-- Cards -->
-<div class="row g-4 mt-4" id="categoryContainer">
+<div class="row g-3 mt-4" id="categoryContainer">
     @foreach (var item in Model)
     {
-        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-            <div class="card h-100 shadow-sm">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex justify-content-center">
+            <div class="card h-100 shadow-sm text-center" style="padding:0; border:none; background-color:transparent;">
+
+                <!-- صورة دائرية كبيرة بدون هامش أبيض -->
                 <a asp-controller="User"
                    asp-action="DisplaySubCategory"
                    asp-route-id="@item.Id">
                     <img src="@Url.Content(item.Image)"
-                         class="card-img-top"
-                         alt="no image"
-                         style="height:200px; object-fit: scale-down;" />
+                         alt="Category"
+                         style="
+                                width:280px;
+                                height:280px;
+                                border-radius:50%;
+                                object-fit:cover;
+                                display:block;
+                                margin:auto;
+                             " />
                 </a>
-                <div class="card-body text-center">
-                    <h5 class="card-title fw-bold">@item.NameE</h5>
+
+                <div class="card-body" style="padding-top:0.5rem;">
+                    <h5 class="card-title fw-bold mt-2">@item.NameE</h5>
                     <p class="card-text text-muted">@item.NameA</p>
                 </div>
+
             </div>
         </div>
     }
 </div>
-

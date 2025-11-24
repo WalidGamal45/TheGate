@@ -1,5 +1,5 @@
 ﻿<!-- Banner -->
-<div style="width:1460px;" id="categoryBanner" class="carousel slide mb-4" data-bs-ride="carousel">
+<div id="categoryBanner" class="carousel slide w-100" style="margin:0;" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
             <img src="~/images/cn_3.webp"
@@ -30,34 +30,39 @@
     </button>
 </div>
 
-
 @if (ViewBag.Message != null)
 {
     <div class="alert alert-warning text-center">@ViewBag.Message</div>
 }
 else
 {
-    <div class="row g-4">
+    <div class="row g-3 mt-4 justify-content-center">
         @foreach (var item in Model)
         {
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2 d-flex justify-content-center">
                 <a asp-controller="User"
                    asp-action="DisplayProduct"
                    asp-route-id="@item.Id"
                    class="text-decoration-none text-dark">
-                    <div class="card h-100 shadow-sm border-0">
+                    <div class="card h-100 shadow-sm border-0 text-center p-2" style="background-color:transparent; padding:0;">
+                        <!-- صورة دائرية كبيرة -->
                         <img src="@Url.Content(item.Image)"
-                             class="card-img-top"
-                             alt="no image"
-                             style="height:200px; object-fit: scale-down;" />
-                        <div class="card-body text-center">
-                            <h5 class="card-title fw-bold">@item.NameE</h5>
+                             alt="@item.NameE"
+                             style="
+                                        width:260px;
+                                        height:260px;
+                                        border-radius:50%;
+                                        object-fit:cover;
+                                        display:block;
+                                        margin:auto;
+                                     " />
+                        <div class="card-body py-2">
+                            <h5 class="card-title fw-bold mt-2">@item.NameE</h5>
                             <p class="card-text text-muted">@item.NameA</p>
                         </div>
                     </div>
                 </a>
             </div>
-
         }
     </div>
 }
